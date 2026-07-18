@@ -1,11 +1,18 @@
-import Upload from "@/components/Upload";
+import { redirect } from "next/navigation";
+import { getPdfTree, findFirstPdf } from "@/lib/pdfs";
 
-export default function Home() {
-  return (
-    <main className="min-h-screen flex flex-col items-center justify-center gap-8">
-      <h1 className="text-4xl font-bold">German Dialogue Studio</h1>
+export default async function HomePage() {
+  const tree = await getPdfTree();
 
-      <Upload />
-    </main>
-  );
+  const first = findFirstPdf(tree);
+
+  if (!first) {
+    return (
+      <main className="flex min-h-screen items-center justify-center">
+        <p>No PDFs found in public/pdfs</p>
+      </main>
+    );
+  }
+
+  redirect(`/lesson/${encodeURIComponent(first.id)}`);
 }
