@@ -1,8 +1,6 @@
-import fs from "fs/promises";
-import path from "path";
-
 export type PdfFileNode = {
   type: "file";
+  mediaType: "pdf" | "video" | "audio";
   id: string;
   name: string;
   url: string;
@@ -17,54 +15,18 @@ export type PdfFolderNode = {
 
 export type PdfNode = PdfFolderNode | PdfFileNode;
 
-const ROOT = path.join(process.cwd(), "public", "pdfs");
+const WORKER_URL = process.env.PDF_WORKER_URL!;
 
 export async function getPdfTree(): Promise<PdfNode[]> {
-  return readDirectory(ROOT);
-}
-
-async function readDirectory(dir: string, relative = ""): Promise<PdfNode[]> {
-  const entries = await fs.readdir(dir, {
-    withFileTypes: true,
+  const response = await fetch(WORKER_URL, {
+    cache: "no-store",
   });
 
-  entries.sort((a, b) => a.name.localeCompare(b.name));
-
-  const nodes: PdfNode[] = [];
-
-  for (const entry of entries) {
-    const full = path.join(dir, entry.name);
-
-    if (entry.isDirectory()) {
-      const folderRelative = relative
-        ? `${relative}/${entry.name}`
-        : entry.name;
-
-      nodes.push({
-        type: "folder",
-        name: entry.name,
-        path: slugify(folderRelative),
-        children: await readDirectory(full, folderRelative),
-      });
-
-      continue;
-    }
-
-    if (!entry.name.toLowerCase().endsWith(".pdf")) {
-      continue;
-    }
-
-    const fileRelative = path.relative(ROOT, full).replace(/\\/g, "/");
-
-    nodes.push({
-      type: "file",
-      id: slugify(fileRelative),
-      name: entry.name.replace(/\.pdf$/i, ""),
-      url: "/pdfs/" + encodeURI(fileRelative),
-    });
+  if (!response.ok) {
+    throw new Error("Failed to load PDF library");
   }
 
-  return nodes;
+  return response.json();
 }
 
 export function findPdfById(nodes: PdfNode[], id: string): PdfFileNode | null {
@@ -74,10 +36,10 @@ export function findPdfById(nodes: PdfNode[], id: string): PdfFileNode | null {
         return node;
       }
     } else {
-      const result = findPdfById(node.children, id);
+      const found = findPdfById(node.children, id);
 
-      if (result) {
-        return result;
+      if (found) {
+        return found;
       }
     }
   }
@@ -99,18 +61,4 @@ export function findFirstPdf(nodes: PdfNode[]): PdfFileNode | null {
   }
 
   return null;
-}
-
-function slugify(file: string): string {
-  return file
-    .replace(/\.pdf$/i, "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/ß/g, "ss")
-    .replace(/\\/g, "/")
-    .toLowerCase()
-    .replace(/\//g, "--")
-    .replace(/\s+/g, "-")
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9-]/g, "");
 }

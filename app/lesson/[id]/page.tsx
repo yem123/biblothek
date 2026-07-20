@@ -28,7 +28,15 @@ export default async function LessonPage({
       <div className="flex flex-1 flex-col">
         <MobileMenu pdfs={pdfs} />
 
-        <PdfViewer id={pdf.id} url={pdf.url} />
+        {pdf.mediaType === "pdf" && <PdfViewer id={pdf.id} url={pdf.url} />}
+
+        {pdf.mediaType === "video" && (
+          <video src={pdf.url} controls autoPlay className="h-full w-full" />
+        )}
+
+        {pdf.mediaType === "audio" && (
+          <audio src={pdf.url} controls autoPlay className="mt-10 w-full" />
+        )}
       </div>
     </div>
   );
