@@ -16,15 +16,15 @@ export type PdfFolderNode = {
 export type PdfNode = PdfFolderNode | PdfFileNode;
 
 export async function getPdfTree(): Promise<PdfNode[]> {
-  const workerUrl = process.env.PDF_WORKER_URL;
+  const workerUrl =
+    process.env.PDF_WORKER_URL ||
+    "https://german-library-api.yemanemeasho2021.workers.dev/";
 
-  if (!workerUrl) {
-    throw new Error("PDF_WORKER_URL is missing");
-  }
+  console.log("Worker URL:", workerUrl);
 
-  const response = await fetch(workerUrl, {
-    cache: "no-store",
-  });
+  const response = await fetch(workerUrl);
+
+  console.log("Status:", response.status);
 
   if (!response.ok) {
     throw new Error(`Failed to load PDF library: ${response.status}`);
