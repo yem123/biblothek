@@ -15,20 +15,21 @@ export type PdfFolderNode = {
 
 export type PdfNode = PdfFolderNode | PdfFileNode;
 
-export async function getPdfTree(): Promise<PdfNode[]> {
-  const workerUrl = "https://german-library-api.yemanemeasho2021.workers.dev/";
+export async function getPdfTree() {
+  const url = "https://german-library-api.yemanemeasho2021.workers.dev/";
 
-  console.log("USING PDF URL:", workerUrl);
+  const response = await fetch(url);
 
-  const response = await fetch(workerUrl);
+  const text = await response.text();
 
-  console.log("Status:", response.status);
+  console.log("PDF API STATUS:", response.status);
+  console.log("PDF API BODY:", text.substring(0, 200));
 
   if (!response.ok) {
-    throw new Error(`Failed to load PDF library: ${response.status}`);
+    throw new Error(`PDF API failed: ${response.status}`);
   }
 
-  return response.json();
+  return JSON.parse(text);
 }
 
 export function findPdfById(nodes: PdfNode[], id: string): PdfFileNode | null {
