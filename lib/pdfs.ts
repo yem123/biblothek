@@ -16,11 +16,9 @@ export type PdfFolderNode = {
 export type PdfNode = PdfFolderNode | PdfFileNode;
 
 export async function getPdfTree(): Promise<PdfNode[]> {
-  const workerUrl = process.env.PDF_WORKER_URL;
-
-  if (!workerUrl) {
-    throw new Error("PDF_WORKER_URL is missing");
-  }
+  const workerUrl =
+    process.env.PDF_WORKER_URL ||
+    "https://german-library-api.yemanemeasho2021.workers.dev";
 
   const response = await fetch(workerUrl, {
     cache: "no-store",
