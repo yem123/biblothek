@@ -1,11 +1,17 @@
 {
-  "name": "biblothek",
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
+  "name": "biblothek",
+  "compatibility_date": "2026-07-18",
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
-    "directory": ".open-next/assets"
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
   },
-  "compatibility_date": "2026-07-21",
-  "compatibility_flags": [
-    "nodejs_compat"
+  "r2_buckets": [
+    {
+      "binding": "MY_BUCKET",
+      "bucket_name": "german-library"
+    }
   ]
 }
