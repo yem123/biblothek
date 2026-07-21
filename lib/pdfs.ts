@@ -1,3 +1,5 @@
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+
 export type PdfFileNode = {
   type: "file";
   mediaType: "pdf" | "video" | "audio";
@@ -15,16 +17,9 @@ export type PdfFolderNode = {
 
 export type PdfNode = PdfFolderNode | PdfFileNode;
 
-const WORKER_URL =
-  process.env.PDF_WORKER_URL ||
-  "https://german-library-api.yemanemeasho2021.workers.dev/";
-
 export async function getPdfTree(): Promise<PdfNode[]> {
-  console.log("WORKER_URL is:", WORKER_URL);
-
-  const response = await fetch(WORKER_URL, {
-    cache: "no-store",
-  });
+  const { env } = getCloudflareContext();
+  const response = await env.LIBRARY_API.fetch("https://internal/");
 
   if (!response.ok) {
     throw new Error(`Failed to load PDF library: ${response.status}`);
