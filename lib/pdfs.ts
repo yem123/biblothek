@@ -20,6 +20,8 @@ const WORKER_URL =
   "https://german-library-api.yemanemeasho2021.workers.dev/";
 
 export async function getPdfTree(): Promise<PdfNode[]> {
+  console.log("WORKER_URL is:", WORKER_URL);
+
   const response = await fetch(WORKER_URL, {
     cache: "no-store",
   });
