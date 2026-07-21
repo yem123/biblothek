@@ -6,6 +6,8 @@ import PdfViewer from "@/components/PdfViewer";
 
 import { getPdfTree, findPdfById } from "@/lib/pdfs";
 
+export const dynamic = "force-dynamic";
+
 export default async function LessonPage({
   params,
 }: {

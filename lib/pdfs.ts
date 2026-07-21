@@ -18,7 +18,7 @@ export type PdfFolderNode = {
 export type PdfNode = PdfFolderNode | PdfFileNode;
 
 export async function getPdfTree(): Promise<PdfNode[]> {
-  const { env } = getCloudflareContext();
+  const { env } = await getCloudflareContext({ async: true });
   const response = await env.LIBRARY_API.fetch("https://internal/");
 
   if (!response.ok) {
