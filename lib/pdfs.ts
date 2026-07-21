@@ -15,15 +15,19 @@ export type PdfFolderNode = {
 
 export type PdfNode = PdfFolderNode | PdfFileNode;
 
-const WORKER_URL = process.env.PDF_WORKER_URL!;
-
 export async function getPdfTree(): Promise<PdfNode[]> {
-  const response = await fetch(WORKER_URL, {
+  const workerUrl = process.env.PDF_WORKER_URL;
+
+  if (!workerUrl) {
+    throw new Error("PDF_WORKER_URL is missing");
+  }
+
+  const response = await fetch(workerUrl, {
     cache: "no-store",
   });
 
   if (!response.ok) {
-    throw new Error("Failed to load PDF library");
+    throw new Error(`Failed to load PDF library: ${response.status}`);
   }
 
   return response.json();
