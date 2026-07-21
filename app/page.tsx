@@ -4,15 +4,23 @@ import { getPdfTree, findFirstPdf } from "@/lib/pdfs";
 export default async function HomePage() {
   const tree = await getPdfTree();
 
-  const first = findFirstPdf(tree);
-
-  if (!first) {
+  if (!Array.isArray(tree)) {
     return (
       <main className="flex min-h-screen items-center justify-center">
-        <p>No PDFs found in public/pdfs</p>
+        <p>Library data is unavailable</p>
       </main>
     );
   }
 
-  redirect(`/lesson/${encodeURIComponent(first.id)}`);
+  const first = findFirstPdf(tree);
+
+  if (!first?.id) {
+    return (
+      <main className="flex min-h-screen items-center justify-center">
+        <p>No File found</p>
+      </main>
+    );
+  }
+
+  redirect(`/lesson/${first.id}`);
 }
