@@ -16,11 +16,9 @@ export type PdfFolderNode = {
 export type PdfNode = PdfFolderNode | PdfFileNode;
 
 export async function getPdfTree(): Promise<PdfNode[]> {
-  const workerUrl =
-    process.env.PDF_WORKER_URL ||
-    "https://german-library-api.yemanemeasho2021.workers.dev/";
+  const workerUrl = "https://german-library-api.yemanemeasho2021.workers.dev/";
 
-  console.log("Worker URL:", workerUrl);
+  console.log("USING PDF URL:", workerUrl);
 
   const response = await fetch(workerUrl);
 
