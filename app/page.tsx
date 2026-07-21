@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import { getPdfTree, findFirstPdf } from "@/lib/pdfs";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const tree = await getPdfTree();
 
