@@ -37,7 +37,7 @@ export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
         `}
       >
         <div className="flex items-center justify-between border-b p-4">
-          <h2 className="font-bold">📚 PDFs</h2>
+          <h2 className="font-bold">📚 Deutsch Bibliothek</h2>
 
           <button onClick={() => setOpen(false)} className="text-xl">
             ×
