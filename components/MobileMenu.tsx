@@ -2,23 +2,32 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import type { PdfNode, PdfFolderNode } from "@/lib/pdfs";
+
+const ICONS = {
+  pdf: "/icons/pdf.svg",
+  video: "/icons/video.svg",
+  audio: "/icons/audio.svg",
+};
 
 export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <header className="md:hidden flex items-center gap-3 border-b bg-white px-4 py-3">
+      <header className="md:hidden flex items-start gap-3 border-b bg-white px-4 py-3">
         <button
           onClick={() => setOpen(true)}
-          className="rounded-md border border-gray-300 px-3 py-1 text-xl"
+          className="text-xl"
         >
           ☰
         </button>
-
-        <h1 className="font-semibold">Deutsch Bibliothek</h1>
+        <h1 className="font-semibold flex flex-col">
+          <span className="text-md">Deutsch Bibliothek</span>
+          <span className="-mt-1 text-xs text-gray-500">Pocket Library</span>
+        </h1>
       </header>
 
       {open && (
@@ -37,7 +46,9 @@ export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
         `}
       >
         <div className="flex items-center justify-between border-b p-4">
-          <h2 className="font-bold">📚 Deutsch Bibliothek</h2>
+          <h2 className="flex items-center gap-2 font-bold">
+            📚Deutsch Bibliothek
+          </h2>
 
           <button onClick={() => setOpen(false)} className="text-xl">
             ×
@@ -93,7 +104,13 @@ function TreeNode({
         paddingLeft: depth * 18 + 16,
       }}
     >
-      📄
+      <Image
+        src={ICONS[node.mediaType]}
+        alt={node.mediaType}
+        width={18}
+        height={18}
+        className="shrink-0"
+      />
       <span
         className={`ml-2 truncate ${active ? "underline text-cyan-700" : ""}`}
       >
@@ -129,9 +146,19 @@ function Folder({
           paddingLeft: depth * 18 + 16,
         }}
       >
-        <span className="mr-2">{open ? "▼" : "▶"}</span>
+        <span className="mr-1 w-3.5 text-xs text-gray-500">
+          {open ? "▼" : "▶"}
+        </span>
 
-        <span className="font-semibold truncate">📁 {node.name}</span>
+        <Image
+          src={open ? "/icons/folder-open.svg" : "/icons/folder.svg"}
+          alt=""
+          width={18}
+          height={18}
+          className="mr-2 shrink-0"
+        />
+
+        <span className="font-semibold truncate">{node.name}</span>
       </button>
 
       {open &&

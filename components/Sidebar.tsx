@@ -2,11 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import type { PdfNode, PdfFolderNode } from "@/lib/pdfs";
 
 type Props = {
   pdfs: PdfNode[];
+};
+
+const ICONS = {
+  pdf: "/icons/pdf.svg",
+  video: "/icons/video.svg",
+  audio: "/icons/audio.svg",
 };
 
 export default function Sidebar({ pdfs }: Props) {
@@ -15,9 +22,11 @@ export default function Sidebar({ pdfs }: Props) {
   return (
     <aside className="hidden md:flex w-72 flex-col border-r border-gray-300 bg-white">
       <div className="border-b border-gray-300 p-5">
-        <h1 className="text-xl font-bold">🇩🇪 Deutsch Bibliothek</h1>
+        <h1 className="flex items-center gap-2 text-xl font-bold">
+          📚Deutsch Bibliothek
+        </h1>
 
-        <p className="mt-1 text-sm text-gray-500">Quick Library</p>
+        <p className="mt-1 pl-7 text-sm text-gray-500">Pocket Library</p>
       </div>
 
       <div className="flex-1 overflow-y-auto">
@@ -57,7 +66,13 @@ function TreeNode({
         paddingLeft: depth * 18 + 16,
       }}
     >
-      📄
+      <Image
+        src={ICONS[node.mediaType]}
+        alt={node.mediaType}
+        width={18}
+        height={18}
+        className="shrink-0"
+      />
       <span
         className={`ml-2 truncate ${active ? "underline text-cyan-700" : ""}`}
       >
@@ -91,9 +106,19 @@ function FolderNode({
           paddingLeft: depth * 18 + 16,
         }}
       >
-        <span className="mr-2">{open ? "▼" : "▶"}</span>
+        <span className="mr-1 w-3.5 text-xs text-gray-500">
+          {open ? "▼" : "▶"}
+        </span>
 
-        <span className="font-semibold truncate">📁 {node.name}</span>
+        <Image
+          src={open ? "/icons/folder-open.svg" : "/icons/folder.svg"}
+          alt=""
+          width={18}
+          height={18}
+          className="mr-2 shrink-0"
+        />
+
+        <span className="font-semibold truncate">{node.name}</span>
       </button>
 
       {open &&
