@@ -1,28 +1,25 @@
-import { redirect } from "next/navigation";
-import { getPdfTree, findFirstPdf } from "@/lib/pdfs";
-
-export const dynamic = "force-dynamic";
+import { getPdfTree } from "@/lib/pdfs";
+import type { PdfFolderNode } from "@/lib/pdfs";
+import FolderContents from "@/components/FolderContents";
 
 export default async function HomePage() {
   const tree = await getPdfTree();
+  const sections = tree.filter((n): n is PdfFolderNode => n.type === "folder");
 
-  if (!Array.isArray(tree)) {
-    return (
-      <main className="flex min-h-screen items-center justify-center">
-        <p>Library data is unavailable</p>
-      </main>
-    );
-  }
+  return (
+    <div className="p-6">
+      {sections.map((section) => (
+        <div key={section.path} id={section.path} className="mb-10 scroll-mt-6">
+          <div className="mb-4 flex items-center gap-3">
+            <h2 className="text-lg font-semibold text-gray-900">
+              {section.name}
+            </h2>
+            <div className="h-px flex-1 bg-gray-300" />
+          </div>
 
-  const first = findFirstPdf(tree);
-
-  if (!first?.id) {
-    return (
-      <main className="flex min-h-screen items-center justify-center">
-        <p>No File found</p>
-      </main>
-    );
-  }
-
-  redirect(`/lesson/${first.id}`);
+          <FolderContents nodes={section.children} />
+        </div>
+      ))}
+    </div>
+  );
 }

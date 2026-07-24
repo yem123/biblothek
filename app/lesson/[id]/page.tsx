@@ -1,12 +1,9 @@
 import { notFound } from "next/navigation";
 
-import Sidebar from "@/components/Sidebar";
-import MobileMenu from "@/components/MobileMenu";
 import PdfViewer from "@/components/PdfViewer";
+import VideoPlaylistPlayer from "@/components/VideoPlaylistPlayer";
 
-import { getPdfTree, findPdfById } from "@/lib/pdfs";
-
-export const dynamic = "force-dynamic";
+import { getPdfTree, findPdfById, findParentFolder } from "@/lib/pdfs";
 
 export default async function LessonPage({
   params,
@@ -15,31 +12,36 @@ export default async function LessonPage({
 }) {
   const { id } = await params;
 
-  const pdfs = await getPdfTree();
+  const tree = await getPdfTree();
 
-  const pdf = findPdfById(pdfs, id);
+  const pdf = findPdfById(tree, id);
 
   if (!pdf) {
     notFound();
   }
 
-  return (
-    <div className="flex h-screen">
-      <Sidebar pdfs={pdfs} />
+  if (pdf.mediaType === "video") {
+    const parent = findParentFolder(tree, id);
 
-      <div className="flex flex-1 flex-col">
-        <MobileMenu pdfs={pdfs} />
+    const videoSiblings = parent
+      ? parent.children.filter(
+          (c): c is typeof pdf => c.type === "file" && c.mediaType === "video",
+        )
+      : [pdf];
 
-        {pdf.mediaType === "pdf" && <PdfViewer id={pdf.id} url={pdf.url} />}
+    if (parent && videoSiblings.length > 1) {
+      return (
+        <VideoPlaylistPlayer
+          current={pdf}
+          playlist={videoSiblings}
+          folderName={parent.name}
+          folderPath={parent.path}
+        />
+      );
+    }
 
-        {pdf.mediaType === "video" && (
-          <video src={pdf.url} controls autoPlay className="h-full w-full" />
-        )}
+    return <video src={pdf.url} controls autoPlay className="h-full w-full" />;
+  }
 
-        {pdf.mediaType === "audio" && (
-          <audio src={pdf.url} controls autoPlay className="mt-10 w-full" />
-        )}
-      </div>
-    </div>
-  );
+  return <PdfViewer id={pdf.id} url={pdf.url} />;
 }

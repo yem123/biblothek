@@ -9,7 +9,6 @@ import type { PdfNode, PdfFolderNode } from "@/lib/pdfs";
 const ICONS = {
   pdf: "/icons/pdf.svg",
   video: "/icons/video.svg",
-  audio: "/icons/audio.svg",
 };
 
 export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
@@ -24,10 +23,10 @@ export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
         >
           ☰
         </button>
-        <h1 className="font-semibold flex flex-col">
+        <Link href="/" className="font-semibold flex flex-col">
           <span className="text-md">Deutsch Bibliothek</span>
           <span className="-mt-1 text-xs text-gray-500">Pocket Library</span>
-        </h1>
+        </Link>
       </header>
 
       {open && (
@@ -46,9 +45,9 @@ export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
         `}
       >
         <div className="flex items-center justify-between border-b p-4">
-          <h2 className="flex items-center gap-2 font-bold">
+          <Link href="/" className="flex items-center gap-2 font-bold">
             📚Deutsch Bibliothek
-          </h2>
+          </Link>
 
           <button onClick={() => setOpen(false)} className="text-xl">
             ×

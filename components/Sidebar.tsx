@@ -13,7 +13,6 @@ type Props = {
 const ICONS = {
   pdf: "/icons/pdf.svg",
   video: "/icons/video.svg",
-  audio: "/icons/audio.svg",
 };
 
 export default function Sidebar({ pdfs }: Props) {
@@ -21,13 +20,13 @@ export default function Sidebar({ pdfs }: Props) {
 
   return (
     <aside className="hidden md:flex w-72 flex-col border-r border-gray-300 bg-white">
-      <div className="border-b border-gray-300 p-5">
+      <Link href="/" className="border-b border-gray-300 p-5">
         <h1 className="flex items-center gap-2 text-xl font-bold">
           📚Deutsch Bibliothek
         </h1>
 
         <p className="mt-1 pl-7 text-sm text-gray-500">Pocket Library</p>
-      </div>
+      </Link>
 
       <div className="flex-1 overflow-y-auto">
         {pdfs.map((node) =>
