@@ -20,10 +20,8 @@ export default function LibraryCard({
   return (
     <Link
       href={`/lesson/${node.id}`}
-      className={`group flex flex-col gap-2 ${
-        node.mediaType === "pdf"
-          ? "w-28 sm:w-32 md:w-36"
-          : "w-40 sm:w-48 md:w-56"
+      className={`group flex grow flex-col gap-2 ${
+        node.mediaType === "pdf" ? "basis-28 max-w-36" : "basis-40 max-w-56"
       }`}
     >
       <div
