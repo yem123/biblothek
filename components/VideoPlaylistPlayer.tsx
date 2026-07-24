@@ -76,7 +76,7 @@ export default function VideoPlaylistPlayer({
 
   return (
     <div className="flex h-full flex-col lg:flex-row">
-      <div className="flex flex-1 flex-col overflow-y-auto p-4">
+      <div className="flex shrink-0 flex-col p-4 lg:flex-1 lg:overflow-y-auto">
         <video
           key={current.id}
           src={current.url}
@@ -87,7 +87,7 @@ export default function VideoPlaylistPlayer({
         />
 
         <div className="mt-2">
-          <h1 className="text-sm md:text-xl font-semibold text-gray-900 md:line-clamp-2 line-clamp-1">
+          <h1 className="line-clamp-1 text-sm font-semibold text-gray-900 md:line-clamp-2 md:text-xl">
             {current.name}
           </h1>
           <p className="text-xs text-gray-500">
@@ -96,8 +96,8 @@ export default function VideoPlaylistPlayer({
         </div>
       </div>
 
-      <aside className="flex max-h-72 w-full flex-col border-t border-gray-500 lg:h-full lg:max-h-none lg:w-96 lg:border-l lg:border-t-0">
-        <div className="flex items-center justify-between border-b border-gray-300 p-4 bg-gray-200">
+      <aside className="flex min-h-0 flex-1 w-full flex-col border-t border-gray-500 lg:h-full lg:max-h-none lg:w-96 lg:flex-none lg:border-l lg:border-t-0">
+        <div className="flex shrink-0 items-center justify-between border-b border-gray-300 bg-gray-200 p-4">
           <div>
             <p className="text-xs uppercase tracking-wide text-gray-500">
               Playlist
@@ -135,7 +135,7 @@ export default function VideoPlaylistPlayer({
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="min-h-0 flex-1 overflow-y-auto">
           {playlist.map((video, index) => (
             <PlaylistItem
               key={video.id}
