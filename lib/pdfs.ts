@@ -6,6 +6,7 @@ export type PdfFileNode = {
   id: string;
   name: string;
   url: string;
+  thumbnailUrl: string | null;
 };
 
 export type PdfFolderNode = {
