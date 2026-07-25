@@ -15,8 +15,12 @@ export default function FolderContents({ nodes }: { nodes: PdfNode[] }) {
     <div className="flex flex-col gap-8">
       {folders.length > 0 && (
         <div className="flex flex-wrap gap-4">
-          {folders.map((folder) => (
-            <PlaylistCard key={folder.path} node={folder} />
+          {folders.map((folder, index) => (
+            <PlaylistCard
+              key={folder.path}
+              node={folder}
+              priority={index < 4}
+            />
           ))}
         </div>
       )}
