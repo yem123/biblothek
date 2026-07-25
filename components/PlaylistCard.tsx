@@ -29,9 +29,9 @@ export default function PlaylistCard({ node }: { node: PdfFolderNode }) {
             return (
               <div
                 key={i}
-                className="absolute inset-0 overflow-hidden rounded-lg bg-gray-300 shadow-sm"
+                className="absolute inset-0 overflow-hidden blur-[1px] rounded-xl bg-gray-300 shadow-sm"
                 style={{
-                  transform: `translateY(-${(i + 1) * 8}px) scale(${1 - (i + 1) * 0.03})`,
+                  transform: `translateY(-${(i + 1) * 8}px) scale(${1 - (i + 1) * 0.07})`,
                 }}
               >
                 {thumb && (

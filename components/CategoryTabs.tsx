@@ -60,7 +60,7 @@ export default function CategoryTabs({
           <button
             key={section.path}
             onClick={() => handleClick(section.path)}
-            className={`shrink-0 rounded-md px-4 py-1.5 text-sm font-bold transition-colors ${
+            className={`shrink-0 rounded-md px-4 py-1.5 text-sm font-bold transition-colors cursor-pointer ${
               pathname === "/" && active === section.path
                 ? "bg-gray-900 text-white"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-200"

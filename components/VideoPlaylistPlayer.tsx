@@ -96,7 +96,7 @@ export default function VideoPlaylistPlayer({
         </div>
       </div>
 
-      <aside className="flex min-h-0 flex-1 w-full flex-col border-t border-gray-500 lg:h-full lg:max-h-none lg:w-96 lg:flex-none lg:border-l lg:border-t-0">
+      <aside className="flex min-h-0 flex-1 w-full flex-col border border-gray-300 lg:rounded-2xl overflow-hidden lg:m-2 lg:mt-4 lg:h-full lg:max-h-none lg:w-96 lg:flex-none">
         <div className="flex shrink-0 items-center justify-between border-b border-gray-300 bg-gray-200 p-4">
           <div>
             <p className="text-xs uppercase tracking-wide text-gray-500">
