@@ -7,6 +7,7 @@ export type PdfFileNode = {
   name: string;
   url: string;
   thumbnailUrl: string | null;
+  subtitleUrl: string | null;
 };
 
 export type PdfFolderNode = {

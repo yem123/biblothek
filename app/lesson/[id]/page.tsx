@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import PdfViewer from "@/components/PdfViewer";
 import VideoPlaylistPlayer from "@/components/VideoPlaylistPlayer";
+import SingleVideoPlayer from "@/components/SingleVideoPlayer";
 
 import { getPdfTree, findPdfById, findParentFolder } from "@/lib/pdfs";
 
@@ -40,7 +41,7 @@ export default async function LessonPage({
       );
     }
 
-    return <video src={pdf.url} controls autoPlay className="h-full w-full" />;
+    return <SingleVideoPlayer video={pdf} />;
   }
 
   return <PdfViewer id={pdf.id} url={pdf.url} />;

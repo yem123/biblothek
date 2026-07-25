@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import type { PdfFileNode } from "@/lib/pdfs";
 import { getThumbnail } from "@/lib/pdfs";
 import { useVideoDuration, formatDuration } from "@/lib/useVideoDuration";
+import SubtitleToggle from "./SubtitleToggle";
 
 type Props = {
   current: PdfFileNode;
@@ -21,6 +22,7 @@ export default function VideoPlaylistPlayer({
   folderName,
   folderPath,
 }: Props) {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
   const storageKey = `playlist-settings-${folderPath}`;
 
@@ -78,21 +80,37 @@ export default function VideoPlaylistPlayer({
     <div className="flex h-full flex-col lg:flex-row">
       <div className="flex shrink-0 flex-col p-4 lg:flex-1 lg:overflow-y-auto">
         <video
+          ref={videoRef}
           key={current.id}
           src={current.url}
           controls
           autoPlay
+          crossOrigin="anonymous"
           onEnded={handleEnded}
           className="w-full rounded-xl bg-black"
-        />
+        >
+          {current.subtitleUrl && (
+            <track
+              kind="subtitles"
+              src={current.subtitleUrl}
+              srcLang="de"
+              label="Deutsch"
+              default
+            />
+          )}
+        </video>
 
-        <div className="mt-2">
-          <h1 className="line-clamp-1 text-sm font-semibold text-gray-900 md:line-clamp-2 md:text-xl">
-            {current.name}
-          </h1>
-          <p className="text-xs text-gray-500">
-            {folderName} · Video {currentIndex + 1} of {playlist.length}
-          </p>
+        <div className="mt-2 flex items-start justify-between gap-3">
+          <div>
+            <h1 className="line-clamp-1 text-sm font-semibold text-gray-900 md:line-clamp-2 md:text-xl">
+              {current.name}
+            </h1>
+            <p className="text-xs text-gray-500">
+              {folderName} · Video {currentIndex + 1} of {playlist.length}
+            </p>
+          </div>
+
+          {current.subtitleUrl && <SubtitleToggle videoRef={videoRef} />}
         </div>
       </div>
 
