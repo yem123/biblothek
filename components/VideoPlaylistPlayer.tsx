@@ -8,6 +8,7 @@ import type { PdfFileNode } from "@/lib/pdfs";
 import { getThumbnail } from "@/lib/pdfs";
 import { useVideoDuration, formatDuration } from "@/lib/useVideoDuration";
 import SubtitleToggle from "./SubtitleToggle";
+import { useSubtitleBlobUrl } from "@/lib/useSubtitleBlobUrl";
 
 type Props = {
   current: PdfFileNode;
@@ -25,6 +26,7 @@ export default function VideoPlaylistPlayer({
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
   const storageKey = `playlist-settings-${folderPath}`;
+  const subtitleBlobUrl = useSubtitleBlobUrl(current.subtitleUrl);
 
   const [loop, setLoop] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -85,14 +87,13 @@ export default function VideoPlaylistPlayer({
           src={current.url}
           controls
           autoPlay
-          crossOrigin="anonymous"
           onEnded={handleEnded}
           className="w-full rounded-xl bg-black"
         >
-          {current.subtitleUrl && (
+          {subtitleBlobUrl && (
             <track
               kind="subtitles"
-              src={current.subtitleUrl}
+              src={subtitleBlobUrl}
               srcLang="de"
               label="Deutsch"
               default

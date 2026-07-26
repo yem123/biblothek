@@ -2,10 +2,12 @@
 
 import { useRef } from "react";
 import type { PdfFileNode } from "@/lib/pdfs";
+import { useSubtitleBlobUrl } from "@/lib/useSubtitleBlobUrl";
 import SubtitleToggle from "./SubtitleToggle";
 
 export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const subtitleBlobUrl = useSubtitleBlobUrl(video.subtitleUrl);
 
   return (
     <div className="flex h-full flex-col p-4">
@@ -14,13 +16,12 @@ export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
         src={video.url}
         controls
         autoPlay
-        crossOrigin="anonymous"
         className="w-full flex-1 rounded-xl bg-black"
       >
-        {video.subtitleUrl && (
+        {subtitleBlobUrl && (
           <track
             kind="subtitles"
-            src={video.subtitleUrl}
+            src={subtitleBlobUrl}
             srcLang="de"
             label="Deutsch"
             default
@@ -31,7 +32,7 @@ export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
       <div className="mt-3 flex items-start justify-between gap-3">
         <h1 className="text-lg font-semibold text-gray-900">{video.name}</h1>
 
-        {video.subtitleUrl && <SubtitleToggle videoRef={videoRef} />}
+        {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
       </div>
     </div>
   );
