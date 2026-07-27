@@ -25,6 +25,7 @@ export type OfflineRecord = {
   blob: Blob;
   size: number;
   name: string;
+  mediaType: "pdf" | "video";
   savedAt: number;
 };
 
@@ -32,6 +33,7 @@ export async function saveOfflineFile(
   id: string,
   blob: Blob,
   name: string,
+  mediaType: "pdf" | "video",
 ): Promise<void> {
   const db = await openDb();
 
@@ -42,6 +44,7 @@ export async function saveOfflineFile(
       blob,
       size: blob.size,
       name,
+      mediaType,
       savedAt: Date.now(),
     } satisfies OfflineRecord);
 
@@ -89,12 +92,15 @@ export async function listOfflineFiles(): Promise<
     request.onsuccess = () => {
       const records = request.result as OfflineRecord[];
       resolve(
-        records.map(({ id, size, name, savedAt }) => ({
-          id,
-          size,
-          name,
-          savedAt,
-        })),
+        records
+          .map(({ id, size, name, mediaType, savedAt }) => ({
+            id,
+            size,
+            name,
+            mediaType,
+            savedAt,
+          }))
+          .sort((a, b) => b.savedAt - a.savedAt),
       );
     };
     request.onerror = () => reject(request.error);

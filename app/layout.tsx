@@ -7,6 +7,7 @@ import MobileMenu from "@/components/MobileMenu";
 import CategoryTabs from "@/components/CategoryTabs";
 import { getPdfTree } from "@/lib/pdfs";
 import type { PdfFolderNode } from "@/lib/pdfs";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <ServiceWorkerRegister />
         <div className="flex h-screen">
           <Sidebar pdfs={pdfs} />
 

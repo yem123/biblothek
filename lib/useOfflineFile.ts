@@ -9,7 +9,12 @@ import {
 
 type Status = "checking" | "idle" | "downloading" | "saved" | "error";
 
-export function useOfflineFile(id: string, url: string, name: string) {
+export function useOfflineFile(
+  id: string,
+  url: string,
+  name: string,
+  mediaType: "pdf" | "video",
+) {
   const [status, setStatus] = useState<Status>("checking");
   const [offlineUrl, setOfflineUrl] = useState<string | null>(null);
 
@@ -43,7 +48,7 @@ export function useOfflineFile(id: string, url: string, name: string) {
       if (!res.ok) throw new Error("Failed to fetch file");
 
       const blob = await res.blob();
-      await saveOfflineFile(id, blob, name);
+      await saveOfflineFile(id, blob, name, mediaType);
 
       const createdUrl = URL.createObjectURL(blob);
       setOfflineUrl(createdUrl);

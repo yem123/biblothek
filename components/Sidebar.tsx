@@ -42,6 +42,13 @@ export default function Sidebar({ pdfs }: Props) {
           ),
         )}
       </div>
+      <Link
+        href="/offline"
+        className="flex items-center gap-2 border-t border-gray-300 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"
+      >
+        <DownloadIcon />
+        Downloads
+      </Link>
     </aside>
   );
 }
@@ -134,5 +141,22 @@ function FolderNode({
           ),
         )}
     </>
+  );
+}
+
+function DownloadIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <path d="M12 3v12" strokeLinecap="round" />
+      <path d="M7 10l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 19h16" strokeLinecap="round" />
+    </svg>
   );
 }
