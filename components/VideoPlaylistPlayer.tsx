@@ -9,6 +9,8 @@ import { getThumbnail } from "@/lib/pdfs";
 import { useVideoDuration, formatDuration } from "@/lib/useVideoDuration";
 import SubtitleToggle from "./SubtitleToggle";
 import { useSubtitleBlobUrl } from "@/lib/useSubtitleBlobUrl";
+import { useOfflineFile } from "@/lib/useOfflineFile";
+import DownloadButton from "./DownloadButton";
 
 type Props = {
   current: PdfFileNode;
@@ -27,6 +29,7 @@ export default function VideoPlaylistPlayer({
   const router = useRouter();
   const storageKey = `playlist-settings-${folderPath}`;
   const subtitleBlobUrl = useSubtitleBlobUrl(current.subtitleUrl);
+  const { offlineUrl } = useOfflineFile(current.id, current.url, current.name);
 
   const [loop, setLoop] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -84,7 +87,7 @@ export default function VideoPlaylistPlayer({
         <video
           ref={videoRef}
           key={current.id}
-          src={current.url}
+          src={offlineUrl ?? current.url}
           controls
           autoPlay
           onEnded={handleEnded}
@@ -110,8 +113,14 @@ export default function VideoPlaylistPlayer({
               {folderName} · Video {currentIndex + 1} of {playlist.length}
             </p>
           </div>
-
-          {current.subtitleUrl && <SubtitleToggle videoRef={videoRef} />}
+          <div className="flex items-center gap-2">
+            {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
+            <DownloadButton
+              id={current.id}
+              url={current.url}
+              name={current.name}
+            />
+          </div>
         </div>
       </div>
 
