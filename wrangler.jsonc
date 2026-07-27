@@ -2,10 +2,15 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
   "name": "biblothek",
-  "compatibility_date": "2026-07-18",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_date": "2026-07-27",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
+  },
+  "vars": {
+    "PDF_WORKER_URL": "https://german-library-api.yemanemeasho2021.workers.dev"
   }
 }

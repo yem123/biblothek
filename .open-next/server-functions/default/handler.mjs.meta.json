@@ -3658,8 +3658,13 @@
       "imports": [],
       "format": "cjs"
     },
+    ".open-next/server-functions/default/.next/server/app/manifest.webmanifest/route_client-reference-manifest.js": {
+      "bytes": 325,
+      "imports": [],
+      "format": "cjs"
+    },
     ".open-next/server-functions/default/node_modules/next/dist/server/load-manifest.external.js": {
-      "bytes": 31394,
+      "bytes": 48346,
       "imports": [
         {
           "path": "path",
@@ -3680,6 +3685,11 @@
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/deep-freeze.js",
           "kind": "require-call",
           "original": "../shared/lib/deep-freeze"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/manifest.webmanifest/route_client-reference-manifest.js",
+          "kind": "require-call",
+          "original": "D:\\React-Prjs\\german-dialogue-app\\.open-next\\server-functions\\default\\.next\\server\\app\\manifest.webmanifest\\route_client-reference-manifest.js"
         }
       ],
       "format": "cjs"
@@ -3688,6 +3698,69 @@
       "bytes": 42,
       "imports": [],
       "format": "esm"
+    },
+    ".open-next/server-functions/default/.next/server/chunks/[turbopack]_runtime.js": {
+      "bytes": 34642,
+      "imports": [
+        {
+          "path": "worker_threads",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": ".open-next/cloudflare-templates/shims/throw.js",
+          "kind": "dynamic-import",
+          "original": "next/dist/compiled/@vercel/og/index.edge.js"
+        },
+        {
+          "path": "path",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "fs",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "stream",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "url",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "<runtime>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/manifest.webmanifest/route.js": {
+      "bytes": 404,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../chunks/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
+    ".open-next/server-functions/default/.next/server/app/apple-icon.png/route.js": {
+      "bytes": 420,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../chunks/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js": {
       "bytes": 34652,
@@ -3741,8 +3814,19 @@
       ],
       "format": "cjs"
     },
+    ".open-next/server-functions/default/.next/server/app/folder/[path]/page.js": {
+      "bytes": 1089,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../../chunks/ssr/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
     ".open-next/server-functions/default/.next/server/app/lesson/[id]/page.js": {
-      "bytes": 985,
+      "bytes": 1046,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -3753,7 +3837,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/_not-found/page.js": {
-      "bytes": 821,
+      "bytes": 882,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -3763,8 +3847,19 @@
       ],
       "format": "cjs"
     },
+    ".open-next/server-functions/default/.next/server/app/icon.svg/route.js": {
+      "bytes": 323,
+      "imports": [
+        {
+          "path": ".open-next/server-functions/default/.next/server/chunks/[turbopack]_runtime.js",
+          "kind": "require-call",
+          "original": "../../chunks/[turbopack]_runtime.js"
+        }
+      ],
+      "format": "cjs"
+    },
     ".open-next/server-functions/default/.next/server/app/page.js": {
-      "bytes": 955,
+      "bytes": 994,
       "imports": [
         {
           "path": ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js",
@@ -3775,7 +3870,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/node_modules/next/dist/server/require.js": {
-      "bytes": 5058,
+      "bytes": 5995,
       "imports": [
         {
           "path": "path",
@@ -3823,9 +3918,24 @@
           "external": true
         },
         {
+          "path": ".open-next/server-functions/default/.next/server/app/manifest.webmanifest/route.js",
+          "kind": "require-call",
+          "original": "D:\\React-Prjs\\german-dialogue-app\\.open-next\\server-functions\\default\\.next\\server\\app\\manifest.webmanifest\\route.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/apple-icon.png/route.js",
+          "kind": "require-call",
+          "original": "D:\\React-Prjs\\german-dialogue-app\\.open-next\\server-functions\\default\\.next\\server\\app\\apple-icon.png\\route.js"
+        },
+        {
           "path": ".open-next/server-functions/default/.next/server/app/_global-error/page.js",
           "kind": "require-call",
           "original": "D:\\React-Prjs\\german-dialogue-app\\.open-next\\server-functions\\default\\.next\\server\\app\\_global-error\\page.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/folder/[path]/page.js",
+          "kind": "require-call",
+          "original": "D:\\React-Prjs\\german-dialogue-app\\.open-next\\server-functions\\default\\.next\\server\\app\\folder\\[path]\\page.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/lesson/[id]/page.js",
@@ -3836,6 +3946,11 @@
           "path": ".open-next/server-functions/default/.next/server/app/_not-found/page.js",
           "kind": "require-call",
           "original": "D:\\React-Prjs\\german-dialogue-app\\.open-next\\server-functions\\default\\.next\\server\\app\\_not-found\\page.js"
+        },
+        {
+          "path": ".open-next/server-functions/default/.next/server/app/icon.svg/route.js",
+          "kind": "require-call",
+          "original": "D:\\React-Prjs\\german-dialogue-app\\.open-next\\server-functions\\default\\.next\\server\\app\\icon.svg\\route.js"
         },
         {
           "path": ".open-next/server-functions/default/.next/server/app/page.js",
@@ -5423,7 +5538,7 @@
       "format": "esm"
     },
     ".open-next/server-functions/default/index.mjs": {
-      "bytes": 82893,
+      "bytes": 85169,
       "imports": [
         {
           "path": "node:module",
@@ -5609,6 +5724,21 @@
         },
         {
           "path": "vm",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "worker_threads",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "path",
+          "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "url",
           "kind": "require-call",
           "external": true
         },
@@ -6588,29 +6718,47 @@
         ".open-next/server-functions/default/node_modules/next/dist/shared/lib/deep-freeze.js": {
           "bytesInOutput": 586
         },
+        ".open-next/server-functions/default/.next/server/app/manifest.webmanifest/route_client-reference-manifest.js": {
+          "bytesInOutput": 481
+        },
         ".open-next/server-functions/default/node_modules/next/dist/server/load-manifest.external.js": {
-          "bytesInOutput": 23985
+          "bytesInOutput": 38297
         },
         ".open-next/cloudflare-templates/shims/throw.js": {
           "bytesInOutput": 215
         },
+        ".open-next/server-functions/default/.next/server/chunks/[turbopack]_runtime.js": {
+          "bytesInOutput": 16705
+        },
+        ".open-next/server-functions/default/.next/server/app/manifest.webmanifest/route.js": {
+          "bytesInOutput": 532
+        },
+        ".open-next/server-functions/default/.next/server/app/apple-icon.png/route.js": {
+          "bytesInOutput": 543
+        },
         ".open-next/server-functions/default/.next/server/chunks/ssr/[turbopack]_runtime.js": {
-          "bytesInOutput": 16719
+          "bytesInOutput": 16720
         },
         ".open-next/server-functions/default/.next/server/app/_global-error/page.js": {
-          "bytesInOutput": 708
+          "bytesInOutput": 709
+        },
+        ".open-next/server-functions/default/.next/server/app/folder/[path]/page.js": {
+          "bytesInOutput": 1203
         },
         ".open-next/server-functions/default/.next/server/app/lesson/[id]/page.js": {
-          "bytesInOutput": 1096
+          "bytesInOutput": 1158
         },
         ".open-next/server-functions/default/.next/server/app/_not-found/page.js": {
-          "bytesInOutput": 934
+          "bytesInOutput": 996
+        },
+        ".open-next/server-functions/default/.next/server/app/icon.svg/route.js": {
+          "bytesInOutput": 440
         },
         ".open-next/server-functions/default/.next/server/app/page.js": {
-          "bytesInOutput": 1060
+          "bytesInOutput": 1100
         },
         ".open-next/server-functions/default/node_modules/next/dist/server/require.js": {
-          "bytesInOutput": 3141
+          "bytesInOutput": 3525
         },
         ".open-next/server-functions/default/node_modules/next/dist/lib/interop-default.js": {
           "bytesInOutput": 363
@@ -6817,10 +6965,10 @@
           "bytesInOutput": 5072
         },
         ".open-next/server-functions/default/index.mjs": {
-          "bytesInOutput": 56820
+          "bytesInOutput": 58869
         }
       },
-      "bytes": 1993689
+      "bytes": 2030504
     }
   }
 }

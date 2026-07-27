@@ -23,6 +23,14 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/folder/[path]",
+      "regex": "^/folder/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPpath": "nxtPpath"
+      },
+      "namedRegex": "^/folder/(?<nxtPpath>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/lesson/[id]",
       "regex": "^/lesson/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -49,6 +57,24 @@
       "regex": "^/_not\\-found(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/apple-icon.png",
+      "regex": "^/apple\\-icon\\.png(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/apple\\-icon\\.png(?:/)?$"
+    },
+    {
+      "page": "/icon.svg",
+      "regex": "^/icon\\.svg(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/icon\\.svg(?:/)?$"
+    },
+    {
+      "page": "/manifest.webmanifest",
+      "regex": "^/manifest\\.webmanifest(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/manifest\\.webmanifest(?:/)?$"
     }
   ],
   "dataRoutes": [],
