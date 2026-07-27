@@ -1,3 +1,5 @@
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+
 export type PdfFileNode = {
   type: "file";
   mediaType: "pdf" | "video";
@@ -32,18 +34,27 @@ export function getThumbnail(node: PdfFileNode, pages?: number | null): string {
 }
 
 export async function getPdfTree(): Promise<PdfNode[]> {
-  const response = await fetch(
-    "https://german-library-api.yemanemeasho2021.workers.dev/",
-    {
-      cache: "no-store",
-    },
-  );
+  try {
+    const { env } = await getCloudflareContext({ async: true });
+    const response = await env.LIBRARY_API.fetch("https://internal/");
 
-  if (!response.ok) {
-    throw new Error(`Failed to load PDF library: ${response.status}`);
+    if (!response.ok) {
+      throw new Error(`Failed to load PDF library: ${response.status}`);
+    }
+
+    return response.json();
+  } catch {
+    const response = await fetch(
+      "https://german-library-api.yemanemeasho2021.workers.dev/",
+      { cache: "no-store" },
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to load PDF library: ${response.status}`);
+    }
+
+    return response.json();
   }
-
-  return response.json();
 }
 
 export function findPdfById(nodes: PdfNode[], id: string): PdfFileNode | null {
