@@ -29,14 +29,10 @@ export default function LibraryCard({
           node.mediaType === "pdf" ? "aspect-3/4" : "aspect-video"
         }`}
       >
-        <Image
+        <img
           src={getThumbnail(node, pages)}
           alt={node.name}
-          fill
-          unoptimized
-          priority={priority}
-          className="object-cover transition-transform duration-200 group-hover:scale-105"
-          sizes="(max-width: 768px) 25vw, 140px"
+          className="object-cover transition-transform duration-200 group-hover:scale-105 absolute inset-0 w-full h-full"
         />
 
         {node.mediaType === "video" && duration !== null && (
