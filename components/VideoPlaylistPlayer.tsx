@@ -199,6 +199,7 @@ function PlaylistItem({
         <Image
           src={getThumbnail(video)}
           alt={video.name}
+          unoptimized
           fill
           sizes="112px"
           className="object-cover"
