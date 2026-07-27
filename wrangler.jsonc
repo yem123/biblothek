@@ -7,17 +7,5 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
-  },
-  "r2_buckets": [
-    {
-      "binding": "MY_BUCKET",
-      "bucket_name": "german-library"
-    }
-  ],
-  "services": [
-  {
-    "binding": "LIBRARY_API",
-    "service": "german-library-api"
   }
-]
 }
