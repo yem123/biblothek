@@ -43,9 +43,12 @@ export default function PlaylistCard({
                 }}
               >
                 {thumb && (
-                  <img
+                  <Image
                     src={thumb}
                     alt=""
+                    unoptimized
+                    fill
+                    sizes="(max-width: 768px) 30vw, 190px"
                     className="object-cover border-t border-white"
                   />
                 )}
@@ -55,10 +58,14 @@ export default function PlaylistCard({
 
         <div className="absolute inset-0 overflow-hidden rounded-lg bg-gray-200 shadow-md ring-1 ring-black/5">
           {cover && (
-            <img
+            <Image
               src={cover}
-              alt={node.name}             
+              alt={node.name}
+              fill
+              unoptimized
+              priority={priority}
               className="object-cover transition-transform border-t border-white duration-200 group-hover:scale-105"
+              sizes="(max-width: 768px) 30vw, 190px"
             />
           )}
 

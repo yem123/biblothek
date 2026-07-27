@@ -196,9 +196,12 @@ function PlaylistItem({
     >
       <span className="text-xs text-gray-500">{index + 1}</span>
       <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-md bg-gray-200">
-        <img
+        <Image
           src={getThumbnail(video)}
-          alt={video.name}      
+          alt={video.name}
+          unoptimized
+          fill
+          sizes="112px"
           className="object-cover"
         />
         {duration !== null && (
