@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "pub-acbb5c2f03ef4301806109061e29aa0e.r2.dev",
+        hostname: "german-library-api.yemanemeasho2021.workers.dev",
       },
     ],
   },
