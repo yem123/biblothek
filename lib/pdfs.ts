@@ -36,7 +36,9 @@ export function getThumbnail(node: PdfFileNode, pages?: number | null): string {
 export async function getPdfTree(): Promise<PdfNode[]> {
   try {
     const { env } = await getCloudflareContext({ async: true });
-    const response = await env.LIBRARY_API.fetch("https://internal/");
+    const response = await env.LIBRARY_API.fetch(
+      "https://german-library-api.yemanemeasho2021.workers.dev",
+    );
 
     if (!response.ok) {
       throw new Error(`Failed to load PDF library: ${response.status}`);
