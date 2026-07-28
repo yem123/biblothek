@@ -51,7 +51,22 @@ function buildTree(items: ListItem[]): OfflineNode[] {
     level.push(item);
   }
 
+  sortNodes(root);
   return root;
+}
+
+function sortNodes(nodes: OfflineNode[]): void {
+  nodes.sort((a, b) => {
+    const nameA = isFolder(a) ? a.name : a.name;
+    const nameB = isFolder(b) ? b.name : b.name;
+    return nameA.localeCompare(nameB);
+  });
+
+  for (const node of nodes) {
+    if (isFolder(node)) {
+      sortNodes(node.children);
+    }
+  }
 }
 
 function collectThumbs(node: OfflineNode, limit = 3): (string | null)[] {
