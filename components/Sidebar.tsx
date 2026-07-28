@@ -41,14 +41,14 @@ export default function Sidebar({ pdfs }: Props) {
             />
           ),
         )}
+        <Link
+          href="/offline"
+          className="flex items-center gap-2 border-t border-gray-300 px-5 py-3 text-sm font-bold text-gray-700 hover:bg-gray-50"
+        >
+          <DownloadIcon />
+          Downloads
+        </Link>
       </div>
-      <Link
-        href="/offline"
-        className="flex items-center gap-2 border-t border-gray-300 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"
-      >
-        <DownloadIcon />
-        Downloads
-      </Link>
     </aside>
   );
 }

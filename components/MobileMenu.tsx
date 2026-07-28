@@ -17,10 +17,7 @@ export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
   return (
     <>
       <header className="md:hidden flex items-start gap-3 border-b bg-white px-4 py-3">
-        <button
-          onClick={() => setOpen(true)}
-          className="text-xl"
-        >
+        <button onClick={() => setOpen(true)} className="text-xl">
           ☰
         </button>
         <Link href="/" className="font-semibold flex flex-col">
@@ -72,6 +69,13 @@ export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
               />
             ),
           )}
+          <Link
+            href="/offline"
+            className="flex items-center gap-2 border-t border-gray-300 px-5 py-3 text-sm font-bold text-gray-700 hover:bg-gray-50"
+          >
+            <DownloadIcon />
+            Downloads
+          </Link>
         </nav>
       </aside>
     </>
@@ -179,5 +183,22 @@ function Folder({
           ),
         )}
     </>
+  );
+}
+
+function DownloadIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <path d="M12 3v12" strokeLinecap="round" />
+      <path d="M7 10l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 19h16" strokeLinecap="round" />
+    </svg>
   );
 }
