@@ -29,7 +29,12 @@ export default function VideoPlaylistPlayer({
   const router = useRouter();
   const storageKey = `playlist-settings-${folderPath}`;
   const subtitleBlobUrl = useSubtitleBlobUrl(current.subtitleUrl);
-  const { offlineUrl } = useOfflineFile(current.id, current.url, current.name);
+  const { offlineUrl } = useOfflineFile(
+    current.id,
+    current.url,
+    current.name,
+    current.mediaType,
+  );
 
   const [loop, setLoop] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -119,6 +124,7 @@ export default function VideoPlaylistPlayer({
               id={current.id}
               url={current.url}
               name={current.name}
+              mediaType={current.mediaType}
             />
           </div>
         </div>

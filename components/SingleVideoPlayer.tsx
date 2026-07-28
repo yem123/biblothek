@@ -10,7 +10,12 @@ import DownloadButton from "./DownloadButton";
 export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const subtitleBlobUrl = useSubtitleBlobUrl(video.subtitleUrl);
-  const { offlineUrl } = useOfflineFile(video.id, video.url, video.name);
+  const { offlineUrl } = useOfflineFile(
+    video.id,
+    video.url,
+    video.name,
+    video.mediaType,
+  );
 
   return (
     <div className="flex h-full flex-col p-4">
@@ -37,7 +42,12 @@ export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
 
         <div className="flex items-center gap-2">
           {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
-          <DownloadButton id={video.id} url={video.url} name={video.name} />
+          <DownloadButton
+            id={video.id}
+            url={video.url}
+            name={video.name}
+            mediaType={video.mediaType}
+          />
         </div>
       </div>
     </div>
