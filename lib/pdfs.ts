@@ -2,7 +2,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export type PdfFileNode = {
   type: "file";
-  mediaType: "pdf" | "video";
+  mediaType: "pdf" | "video" | "playlist";
   id: string;
   name: string;
   url: string;
@@ -16,6 +16,19 @@ export type PdfFolderNode = {
   path: string;
   children: PdfNode[];
 };
+
+function slugify(file: string): string {
+  return file
+    .replace(/\.[^/.]+$/, "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ß/g, "ss")
+    .toLowerCase()
+    .replace(/\//g, "--")
+    .replace(/\s+/g, "-")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9-]/g, "");
+}
 
 export type PdfNode = PdfFolderNode | PdfFileNode;
 
@@ -41,8 +54,9 @@ export async function getPdfTree(): Promise<PdfNode[]> {
     if (!response.ok) {
       throw new Error(`Failed to load PDF library: ${response.status}`);
     }
-
-    return response.json();
+    const tree: PdfNode[] = await response.json();
+    addTvProgrammes(tree);
+    return tree;
   } catch {
     const response = await fetch(
       "https://german-library-api.yemanemeasho2021.workers.dev/",
@@ -135,10 +149,14 @@ export function findFolderByPath(
 
 export function collectCoverType(node: PdfFolderNode): "pdf" | "video" | null {
   for (const child of node.children) {
-    if (child.type === "file") return child.mediaType;
+    if (child.type === "file") {
+      return child.mediaType === "pdf" ? "pdf" : "video";
+    }
+
     const found = collectCoverType(child);
     if (found) return found;
   }
+
   return null;
 }
 
@@ -156,4 +174,35 @@ export function findParentFolder(
     }
   }
   return null;
+}
+
+function addTvProgrammes(nodes: PdfNode[]) {
+  const tvFolder = findFolderByPath(nodes, slugify("i. Videos/Tv-programmes"));
+
+  if (!tvFolder) return;
+
+  if (tvFolder.children.some((n) => n.type === "file" && n.id === "tv-dark")) {
+    return;
+  }
+
+  tvFolder.children.push(
+    {
+      type: "file",
+      mediaType: "playlist",
+      id: "tv-filme",
+      name: "Filme",
+      url: "https://www.ardmediathek.de/filme",
+      thumbnailUrl: "/thumbnails/filme.jpg",
+      subtitleUrl: null,
+    },
+    {
+      type: "file",
+      mediaType: "playlist",
+      id: "tv-serien",
+      name: "Serien",
+      url: "https://www.ardmediathek.de/serien",
+      thumbnailUrl: "/thumbnails/serien.jpg",
+      subtitleUrl: null,
+    },
+  );
 }
