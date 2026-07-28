@@ -14,7 +14,7 @@ export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
     video.id,
     video.url,
     video.name,
-    video.mediaType,
+    video.mediaType === "playlist" ? "video" : video.mediaType,
     video.thumbnailUrl,
   );
 
@@ -43,13 +43,15 @@ export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
 
         <div className="flex items-center gap-2">
           {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
-          <DownloadButton
-            id={video.id}
-            url={video.url}
-            name={video.name}
-            mediaType={video.mediaType}
-            thumbnailUrl={video.thumbnailUrl}
-          />
+          {video.mediaType !== "playlist" && (
+            <DownloadButton
+              id={video.id}
+              url={video.url}
+              name={video.name}
+              mediaType={video.mediaType}
+              thumbnailUrl={video.thumbnailUrl}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -33,7 +33,7 @@ export default function VideoPlaylistPlayer({
     current.id,
     current.url,
     current.name,
-    current.mediaType,
+    current.mediaType === "playlist" ? "video" : current.mediaType,
     current.thumbnailUrl,
   );
 
@@ -121,13 +121,15 @@ export default function VideoPlaylistPlayer({
           </div>
           <div className="flex items-center gap-2">
             {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
-            <DownloadButton
-              id={current.id}
-              url={current.url}
-              name={current.name}
-              mediaType={current.mediaType}
-              thumbnailUrl={current.thumbnailUrl}
-            />
+            {current.mediaType !== "playlist" && (
+              <DownloadButton
+                id={current.id}
+                url={current.url}
+                name={current.name}
+                mediaType={current.mediaType}
+                thumbnailUrl={current.thumbnailUrl}
+              />
+            )}
           </div>
         </div>
       </div>
