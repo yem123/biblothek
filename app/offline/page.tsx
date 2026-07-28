@@ -8,6 +8,7 @@ import {
 } from "@/lib/offlineDb";
 import type { OfflineRecord } from "@/lib/offlineDb";
 import Image from "next/image";
+import { OfflinePdfViewer } from "@/components/OfflinePdfViewer";
 
 type ListItem = Omit<OfflineRecord, "blob">;
 
@@ -68,11 +69,7 @@ export default function OfflinePage() {
             className="w-full flex-1 rounded-xl bg-black"
           />
         ) : (
-          <iframe
-            src={playing.url}
-            className="w-full flex-1 rounded-xl border"
-            title={playing.item.name}
-          />
+          <OfflinePdfViewer url={playing.url} />
         )}
 
         <h1 className="mt-3 text-lg font-semibold text-gray-900">
