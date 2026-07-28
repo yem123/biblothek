@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   listOfflineFiles,
   getOfflineFile,
   deleteOfflineFile,
 } from "@/lib/offlineDb";
 import type { OfflineRecord } from "@/lib/offlineDb";
-import Image from "next/image";
 import { OfflinePdfViewer } from "@/components/OfflinePdfViewer";
 
 type ListItem = Omit<OfflineRecord, "blob">;
@@ -26,17 +26,13 @@ export default function OfflinePage() {
   async function play(item: ListItem) {
     const blob = await getOfflineFile(item.id);
     if (!blob) return;
-
-    const url = URL.createObjectURL(blob);
-    setPlaying({ item, url });
+    setPlaying({ item, url: URL.createObjectURL(blob) });
   }
 
   async function remove(item: ListItem) {
     await deleteOfflineFile(item.id);
     setItems((prev) => prev?.filter((i) => i.id !== item.id) ?? null);
-    if (playing?.item.id === item.id) {
-      setPlaying(null);
-    }
+    if (playing?.item.id === item.id) setPlaying(null);
   }
 
   function formatSize(bytes: number): string {
@@ -95,53 +91,76 @@ export default function OfflinePage() {
     );
   }
 
+  const groups = new Map<string, ListItem[]>();
+
+  for (const item of items) {
+    const key =
+      item.breadcrumb && item.breadcrumb.length > 0
+        ? item.breadcrumb.join(" / ")
+        : "Other";
+    const existing = groups.get(key) ?? [];
+    existing.push(item);
+    groups.set(key, existing);
+  }
+
   return (
     <main className="p-6">
-      <h1 className="mb-4 text-lg font-semibold text-gray-900">
+      <h1 className="mb-6 text-lg font-semibold text-gray-900">
         Downloaded ({items.length})
       </h1>
 
-      <div className="flex flex-col divide-y divide-gray-200 rounded-lg border border-gray-200">
-        {items.map((item) => (
-          <div key={item.id} className="flex items-center gap-3 p-3">
-            <button
-              onClick={() => play(item)}
-              className="flex min-w-0 flex-1 items-center gap-3 text-left"
-            >
-              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md bg-gray-100">
-                <Image
-                  src={
-                    item.thumbnailUrl ??
-                    (item.mediaType === "video"
-                      ? "/thumbnails/video-thumbnail.jpg"
-                      : "/thumbnails/pdf-thumbnail.jpg")
-                  }
-                  alt=""
-                  fill
-                  sizes="40px"
-                  className="object-cover"
-                />
-              </div>
-
-              <div className="min-w-0">
-                <p className="line-clamp-1 text-sm font-medium text-gray-900">
-                  {item.name}
-                </p>
-                <p className="text-xs text-gray-500">{formatSize(item.size)}</p>
-              </div>
-            </button>
-
-            <button
-              onClick={() => remove(item)}
-              title="Remove"
-              aria-label="Remove download"
-              className="shrink-0 rounded p-2 text-gray-400 hover:bg-red-50 hover:text-red-600"
-            >
-              <TrashIcon />
-            </button>
+      {[...groups.entries()].map(([groupName, groupItems]) => (
+        <div key={groupName} className="mb-8">
+          <div className="mb-3 flex items-center gap-3">
+            <h2 className="text-sm font-semibold text-gray-700">{groupName}</h2>
+            <div className="h-px flex-1 bg-gray-200" />
           </div>
-        ))}
-      </div>
+
+          <div className="flex flex-col divide-y divide-gray-200 rounded-lg border border-gray-200">
+            {groupItems.map((item) => (
+              <div key={item.id} className="flex items-center gap-3 p-3">
+                <button
+                  onClick={() => play(item)}
+                  className="flex min-w-0 flex-1 items-center gap-3 text-left"
+                >
+                  <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md bg-gray-100">
+                    <Image
+                      src={
+                        item.thumbnailUrl ??
+                        (item.mediaType === "video"
+                          ? "/thumbnails/video-thumbnail.jpg"
+                          : "/thumbnails/pdf-thumbnail.jpg")
+                      }
+                      alt=""
+                      fill
+                      sizes="40px"
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <div className="min-w-0">
+                    <p className="line-clamp-1 text-sm font-medium text-gray-900">
+                      {item.name}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {formatSize(item.size)}
+                    </p>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => remove(item)}
+                  title="Remove"
+                  aria-label="Remove download"
+                  className="shrink-0 rounded p-2 text-gray-400 hover:bg-red-50 hover:text-red-600"
+                >
+                  <TrashIcon />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
     </main>
   );
 }

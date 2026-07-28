@@ -4,7 +4,12 @@ import PdfViewer from "@/components/PdfViewer";
 import VideoPlaylistPlayer from "@/components/VideoPlaylistPlayer";
 import SingleVideoPlayer from "@/components/SingleVideoPlayer";
 
-import { getPdfTree, findPdfById, findParentFolder } from "@/lib/pdfs";
+import {
+  getPdfTree,
+  findPdfById,
+  findParentFolder,
+  findFolderPath,
+} from "@/lib/pdfs";
 
 export default async function LessonPage({
   params,
@@ -20,6 +25,8 @@ export default async function LessonPage({
   if (!pdf) {
     notFound();
   }
+
+  const folderPath = findFolderPath(tree, id) ?? [];
 
   if (pdf.mediaType === "video") {
     const parent = findParentFolder(tree, id);
@@ -37,11 +44,12 @@ export default async function LessonPage({
           playlist={videoSiblings}
           folderName={parent.name}
           folderPath={parent.path}
+          breadcrumb={folderPath}
         />
       );
     }
 
-    return <SingleVideoPlayer video={pdf} />;
+    return <SingleVideoPlayer video={pdf} breadcrumb={folderPath} />;
   }
 
   return (
@@ -50,6 +58,7 @@ export default async function LessonPage({
       url={pdf.url}
       name={pdf.name}
       thumbnailUrl={pdf.thumbnailUrl}
+      breadcrumb={folderPath}
     />
   );
 }

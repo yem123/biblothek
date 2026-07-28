@@ -17,6 +17,7 @@ type Props = {
   playlist: PdfFileNode[];
   folderName: string;
   folderPath: string;
+  breadcrumb: string[];
 };
 
 export default function VideoPlaylistPlayer({
@@ -24,6 +25,7 @@ export default function VideoPlaylistPlayer({
   playlist,
   folderName,
   folderPath,
+  breadcrumb,
 }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
@@ -35,6 +37,7 @@ export default function VideoPlaylistPlayer({
     current.name,
     current.mediaType === "playlist" ? "video" : current.mediaType,
     current.thumbnailUrl,
+    breadcrumb,
   );
 
   const [loop, setLoop] = useState(() => {
@@ -128,6 +131,7 @@ export default function VideoPlaylistPlayer({
                 name={current.name}
                 mediaType={current.mediaType}
                 thumbnailUrl={current.thumbnailUrl}
+                breadcrumb={breadcrumb}
               />
             )}
           </div>

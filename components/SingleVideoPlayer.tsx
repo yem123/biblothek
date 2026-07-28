@@ -7,7 +7,13 @@ import { useOfflineFile } from "@/lib/useOfflineFile";
 import SubtitleToggle from "./SubtitleToggle";
 import DownloadButton from "./DownloadButton";
 
-export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
+export default function SingleVideoPlayer({
+  video,
+  breadcrumb,
+}: {
+  video: PdfFileNode;
+  breadcrumb: string[];
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const subtitleBlobUrl = useSubtitleBlobUrl(video.subtitleUrl);
   const { offlineUrl } = useOfflineFile(
@@ -16,6 +22,7 @@ export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
     video.name,
     video.mediaType === "playlist" ? "video" : video.mediaType,
     video.thumbnailUrl,
+    breadcrumb,
   );
 
   return (
@@ -50,6 +57,7 @@ export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
               name={video.name}
               mediaType={video.mediaType}
               thumbnailUrl={video.thumbnailUrl}
+              breadcrumb={breadcrumb}
             />
           )}
         </div>

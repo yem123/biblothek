@@ -133,6 +133,22 @@ export function findFolderByPath(
   return null;
 }
 
+export function findFolderPath(
+  nodes: PdfNode[],
+  id: string,
+  trail: string[] = [],
+): string[] | null {
+  for (const node of nodes) {
+    if (node.type === "file") {
+      if (node.id === id) return trail;
+    } else {
+      const found = findFolderPath(node.children, id, [...trail, node.name]);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
 export function collectCoverType(node: PdfFolderNode): "pdf" | "video" | null {
   for (const child of node.children) {
     if (child.type === "file") {

@@ -14,6 +14,7 @@ type Props = {
   id: string;
   name: string;
   thumbnailUrl: string | null;
+  breadcrumb: string[];
 };
 
 const Document = dynamic(
@@ -28,13 +29,20 @@ const Page = dynamic(() => import("react-pdf").then((mod) => mod.Page), {
   ssr: false,
 });
 
-export default function PdfViewer({ url, id, name, thumbnailUrl }: Props) {
+export default function PdfViewer({ url, id, name, thumbnailUrl, breadcrumb }: Props) {
   const [numPages, setNumPages] = useState(0);
   const [pageWidth, setPageWidth] = useState<number>();
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const { offlineUrl } = useOfflineFile(id, url, name, "pdf", thumbnailUrl);
+  const { offlineUrl } = useOfflineFile(
+    id,
+    url,
+    name,
+    "pdf",
+    thumbnailUrl,
+    breadcrumb,
+  );
   const fileToShow = offlineUrl ?? url;
 
   useEffect(() => {
@@ -97,6 +105,7 @@ export default function PdfViewer({ url, id, name, thumbnailUrl }: Props) {
           name={name}
           mediaType="pdf"
           thumbnailUrl={thumbnailUrl}
+          breadcrumb={breadcrumb}
         />
       </div>
 

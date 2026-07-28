@@ -27,6 +27,7 @@ export type OfflineRecord = {
   name: string;
   mediaType: "pdf" | "video";
   thumbnailUrl: string | null;
+  breadcrumb: string[];
   savedAt: number;
 };
 
@@ -36,6 +37,7 @@ export async function saveOfflineFile(
   name: string,
   mediaType: "pdf" | "video",
   thumbnailUrl: string | null,
+  breadcrumb: string[],
 ): Promise<void> {
   const db = await openDb();
 
@@ -48,6 +50,7 @@ export async function saveOfflineFile(
       name,
       mediaType,
       thumbnailUrl,
+      breadcrumb,
       savedAt: Date.now(),
     } satisfies OfflineRecord);
 
@@ -96,14 +99,25 @@ export async function listOfflineFiles(): Promise<
       const records = request.result as OfflineRecord[];
       resolve(
         records
-          .map(({ id, size, name, mediaType, thumbnailUrl, savedAt }) => ({
-            id,
-            size,
-            name,
-            mediaType,
-            thumbnailUrl,
-            savedAt,
-          }))
+          .map(
+            ({
+              id,
+              size,
+              name,
+              mediaType,
+              thumbnailUrl,
+              breadcrumb,
+              savedAt,
+            }) => ({
+              id,
+              size,
+              name,
+              mediaType,
+              thumbnailUrl,
+              breadcrumb,
+              savedAt,
+            }),
+          )
           .sort((a, b) => b.savedAt - a.savedAt),
       );
     };

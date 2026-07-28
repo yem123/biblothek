@@ -15,6 +15,7 @@ export function useOfflineFile(
   name: string,
   mediaType: "pdf" | "video",
   thumbnailUrl: string | null,
+  breadcrumb: string[],
 ) {
   const [status, setStatus] = useState<Status>("checking");
   const [offlineUrl, setOfflineUrl] = useState<string | null>(null);
@@ -49,7 +50,14 @@ export function useOfflineFile(
       if (!res.ok) throw new Error("Failed to fetch file");
 
       const blob = await res.blob();
-      await saveOfflineFile(id, blob, name, mediaType, thumbnailUrl);
+      await saveOfflineFile(
+        id,
+        blob,
+        name,
+        mediaType,
+        thumbnailUrl,
+        breadcrumb,
+      );
 
       const createdUrl = URL.createObjectURL(blob);
       setOfflineUrl(createdUrl);
