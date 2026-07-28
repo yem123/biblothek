@@ -89,9 +89,9 @@ export default function OfflinePage() {
           No items downloaded
         </h1>
         <p className="max-w-xs text-sm text-gray-500">
-          {`Videos and PDFs you save for offline will show up here. Connect to the
+          Videos and PDFs you save for offline will show up here. Connect to the
           internet and tap &quot;Download&quot; on anything you&apos;d like to
-          access offline.`}
+          access offline.
         </p>
       </main>
     );
