@@ -34,6 +34,7 @@ export default function VideoPlaylistPlayer({
     current.url,
     current.name,
     current.mediaType,
+    current.thumbnailUrl,
   );
 
   const [loop, setLoop] = useState(() => {
@@ -125,6 +126,7 @@ export default function VideoPlaylistPlayer({
               url={current.url}
               name={current.name}
               mediaType={current.mediaType}
+              thumbnailUrl={current.thumbnailUrl}
             />
           </div>
         </div>

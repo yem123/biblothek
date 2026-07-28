@@ -7,13 +7,21 @@ export default function DownloadButton({
   url,
   name,
   mediaType,
+  thumbnailUrl,
 }: {
   id: string;
   url: string;
   name: string;
   mediaType: "pdf" | "video";
+  thumbnailUrl: string | null;
 }) {
-  const { status, download, remove } = useOfflineFile(id, url, name, mediaType);
+  const { status, download, remove } = useOfflineFile(
+    id,
+    url,
+    name,
+    mediaType,
+    thumbnailUrl,
+  );
 
   if (status === "checking") return null;
 

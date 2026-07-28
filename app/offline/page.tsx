@@ -7,6 +7,7 @@ import {
   deleteOfflineFile,
 } from "@/lib/offlineDb";
 import type { OfflineRecord } from "@/lib/offlineDb";
+import Image from "next/image";
 
 type ListItem = Omit<OfflineRecord, "blob">;
 
@@ -106,18 +107,31 @@ export default function OfflinePage() {
       <div className="flex flex-col divide-y divide-gray-200 rounded-lg border border-gray-200">
         {items.map((item) => (
           <div key={item.id} className="flex items-center gap-3 p-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-500">
-              {item.mediaType === "video" ? <VideoIcon /> : <PdfIcon />}
-            </div>
-
             <button
               onClick={() => play(item)}
-              className="min-w-0 flex-1 text-left"
+              className="flex min-w-0 flex-1 items-center gap-3 text-left"
             >
-              <p className="line-clamp-1 text-sm font-medium text-gray-900">
-                {item.name}
-              </p>
-              <p className="text-xs text-gray-500">{formatSize(item.size)}</p>
+              <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md bg-gray-100">
+                <Image
+                  src={
+                    item.thumbnailUrl ??
+                    (item.mediaType === "video"
+                      ? "/thumbnails/video-thumbnail.jpg"
+                      : "/thumbnails/pdf-thumbnail.jpg")
+                  }
+                  alt=""
+                  fill
+                  sizes="40px"
+                  className="object-cover"
+                />
+              </div>
+
+              <div className="min-w-0">
+                <p className="line-clamp-1 text-sm font-medium text-gray-900">
+                  {item.name}
+                </p>
+                <p className="text-xs text-gray-500">{formatSize(item.size)}</p>
+              </div>
             </button>
 
             <button
@@ -132,38 +146,6 @@ export default function OfflinePage() {
         ))}
       </div>
     </main>
-  );
-}
-
-function VideoIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <rect x="2" y="5" width="20" height="14" rx="2" />
-      <path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function PdfIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <path d="M6 2h9l5 5v15H6z" />
-      <path d="M15 2v5h5" />
-    </svg>
   );
 }
 

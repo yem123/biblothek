@@ -15,6 +15,7 @@ export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
     video.url,
     video.name,
     video.mediaType,
+    video.thumbnailUrl,
   );
 
   return (
@@ -47,6 +48,7 @@ export default function SingleVideoPlayer({ video }: { video: PdfFileNode }) {
             url={video.url}
             name={video.name}
             mediaType={video.mediaType}
+            thumbnailUrl={video.thumbnailUrl}
           />
         </div>
       </div>

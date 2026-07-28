@@ -44,5 +44,12 @@ export default async function LessonPage({
     return <SingleVideoPlayer video={pdf} />;
   }
 
-  return <PdfViewer id={pdf.id} url={pdf.url} />;
+  return (
+    <PdfViewer
+      id={pdf.id}
+      url={pdf.url}
+      name={pdf.name}
+      thumbnailUrl={pdf.thumbnailUrl}
+    />
+  );
 }
