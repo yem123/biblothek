@@ -13,16 +13,32 @@ const ICONS = {
 
 export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <>
-      <header className="md:hidden flex items-start gap-3 border-b bg-white px-4 py-3">
+      <header className="flex items-center gap-3 border-b bg-white px-4 py-3 md:hidden">
         <button onClick={() => setOpen(true)} className="text-xl">
           ☰
         </button>
-        <Link href="/" className="font-semibold flex flex-col">
-          <span className="text-md">Deutsch Bibliothek</span>
+
+        <Link href="/" className="flex flex-1 flex-col">
+          <span className="text-md font-semibold">Deutsch Bibliothek</span>
           <span className="-mt-1 text-xs text-gray-500">Pocket Library</span>
+        </Link>
+
+        <Link
+          href="/offline"
+          className={`flex gap-2 items-center p-2 rounded-md text-xs text-gray-500 font-semibold cursor-pointer transition-colors ${
+            pathname === "/offline"
+              ? "bg-gray-900 text-white"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+        >
+          <span>
+            <DownloadIcon />
+          </span>
+          <span className="">View offline</span>
         </Link>
       </header>
 
@@ -74,7 +90,7 @@ export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
             className="flex items-center gap-2 border-t border-gray-300 px-5 py-3 text-sm font-bold text-gray-700 hover:bg-gray-50"
           >
             <DownloadIcon />
-            Downloads
+            View offline
           </Link>
         </nav>
       </aside>
