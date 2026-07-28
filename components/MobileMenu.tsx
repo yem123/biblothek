@@ -9,6 +9,7 @@ import type { PdfNode, PdfFolderNode } from "@/lib/pdfs";
 const ICONS = {
   pdf: "/icons/pdf.svg",
   video: "/icons/video.svg",
+  playlist: "/icons/video.svg",
 };
 
 export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {

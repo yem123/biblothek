@@ -13,6 +13,7 @@ type Props = {
 const ICONS = {
   pdf: "/icons/pdf.svg",
   video: "/icons/video.svg",
+  playlist: "/icons/video.svg",
 };
 
 export default function Sidebar({ pdfs }: Props) {
