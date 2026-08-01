@@ -10,6 +10,7 @@ const ICONS = {
   pdf: "/icons/pdf.svg",
   video: "/icons/video.svg",
   playlist: "/icons/video.svg",
+  youtube: "/icons/video.svg",
 };
 
 export default function MobileMenu({ pdfs }: { pdfs: PdfNode[] }) {
