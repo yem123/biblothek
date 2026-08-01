@@ -96,25 +96,29 @@ export default function VideoPlaylistPlayer({
   return (
     <div className="flex h-full flex-col lg:flex-row">
       <div className="flex shrink-0 flex-col p-4 lg:flex-1 lg:overflow-y-auto">
-        <video
-          ref={videoRef}
-          key={current.id}
-          src={offlineUrl ?? current.url}
-          controls
-          autoPlay
-          onEnded={handleEnded}
-          className="w-full rounded-xl bg-black"
-        >
-          {subtitleBlobUrl && (
-            <track
-              kind="subtitles"
-              src={subtitleBlobUrl}
-              srcLang="de"
-              label="Deutsch"
-              default
-            />
-          )}
-        </video>
+        {current.mediaType === "youtube" ? (
+          <YouTubePlayer url={current.url} onEnded={handleEnded} />
+        ) : (
+          <video
+            ref={videoRef}
+            key={current.id}
+            src={offlineUrl ?? current.url}
+            controls
+            autoPlay
+            onEnded={handleEnded}
+            className="w-full rounded-xl bg-black"
+          >
+            {subtitleBlobUrl && (
+              <track
+                kind="subtitles"
+                src={subtitleBlobUrl}
+                srcLang="de"
+                label="Deutsch"
+                default
+              />
+            )}
+          </video>
+        )}
 
         <div className="mt-2 flex items-start justify-between gap-3">
           <div>
@@ -125,31 +129,7 @@ export default function VideoPlaylistPlayer({
               {folderName} · Video {currentIndex + 1} of {playlist.length}
             </p>
           </div>
-          {current.mediaType === "youtube" ? (
-            <YouTubePlayer url={current.url} onEnded={handleEnded} />
-          ) : (
-            <video
-              ref={videoRef}
-              key={current.id}
-              src={offlineUrl ?? current.url}
-              controls
-              autoPlay
-              onEnded={handleEnded}
-              className="w-full rounded-xl bg-black"
-            >
-              {subtitleBlobUrl && (
-                <track
-                  kind="subtitles"
-                  src={subtitleBlobUrl}
-                  srcLang="de"
-                  label="Deutsch"
-                  default
-                />
-              )}
-            </video>
-          )}
 
-          {/* Subtitle toggle and DownloadButton: only show for real (non-YouTube) videos */}
           {current.mediaType !== "youtube" && (
             <div className="flex items-center gap-2">
               {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
@@ -229,7 +209,9 @@ function PlaylistItem({
   index: number;
   active: boolean;
 }) {
-  const duration = useVideoDuration(video.url);
+  const duration = useVideoDuration(
+    video.mediaType === "video" ? video.url : "",
+  );
 
   return (
     <Link
