@@ -35,10 +35,6 @@ export default function PlaylistVideoCard({ node }: { node: PdfFileNode }) {
             </svg>
           </div>
         </div>
-
-        <span className="absolute bottom-1.5 left-1.5 rounded bg-black/80 px-1.5 py-0.5 text-xs font-medium text-white">
-          TV
-        </span>
       </div>
 
       <p className="line-clamp-2 text-xs font-medium text-gray-900">
