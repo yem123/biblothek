@@ -11,6 +11,7 @@ import SubtitleToggle from "./SubtitleToggle";
 import { useSubtitleBlobUrl } from "@/lib/useSubtitleBlobUrl";
 import { useOfflineFile } from "@/lib/useOfflineFile";
 import DownloadButton from "./DownloadButton";
+import YouTubePlayer from "./YouTubePlayer";
 
 type Props = {
   current: PdfFileNode;
@@ -31,11 +32,13 @@ export default function VideoPlaylistPlayer({
   const router = useRouter();
   const storageKey = `playlist-settings-${folderPath}`;
   const subtitleBlobUrl = useSubtitleBlobUrl(current.subtitleUrl);
+  const downloadableMediaType: "pdf" | "video" =
+    current.mediaType === "pdf" ? "pdf" : "video";
   const { offlineUrl } = useOfflineFile(
     current.id,
     current.url,
     current.name,
-    current.mediaType === "playlist" ? "video" : current.mediaType,
+    downloadableMediaType,
     current.thumbnailUrl,
     breadcrumb,
   );
@@ -122,19 +125,44 @@ export default function VideoPlaylistPlayer({
               {folderName} · Video {currentIndex + 1} of {playlist.length}
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
-            {current.mediaType !== "playlist" && (
+          {current.mediaType === "youtube" ? (
+            <YouTubePlayer url={current.url} onEnded={handleEnded} />
+          ) : (
+            <video
+              ref={videoRef}
+              key={current.id}
+              src={offlineUrl ?? current.url}
+              controls
+              autoPlay
+              onEnded={handleEnded}
+              className="w-full rounded-xl bg-black"
+            >
+              {subtitleBlobUrl && (
+                <track
+                  kind="subtitles"
+                  src={subtitleBlobUrl}
+                  srcLang="de"
+                  label="Deutsch"
+                  default
+                />
+              )}
+            </video>
+          )}
+
+          {/* Subtitle toggle and DownloadButton: only show for real (non-YouTube) videos */}
+          {current.mediaType !== "youtube" && (
+            <div className="flex items-center gap-2">
+              {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
               <DownloadButton
                 id={current.id}
                 url={current.url}
                 name={current.name}
-                mediaType={current.mediaType}
+                mediaType={downloadableMediaType}
                 thumbnailUrl={current.thumbnailUrl}
                 breadcrumb={breadcrumb}
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 

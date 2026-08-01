@@ -2,7 +2,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export type PdfFileNode = {
   type: "file";
-  mediaType: "pdf" | "video" | "playlist";
+  mediaType: "pdf" | "video" | "playlist" | "youtube";
   id: string;
   name: string;
   url: string;

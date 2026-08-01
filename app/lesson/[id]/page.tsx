@@ -28,20 +28,21 @@ export default async function LessonPage({
 
   const folderPath = findFolderPath(tree, id) ?? [];
 
-  if (pdf.mediaType === "video") {
+  if (pdf.mediaType === "video" || pdf.mediaType === "youtube") {
     const parent = findParentFolder(tree, id);
 
-    const videoSiblings = parent
+    const siblings = parent
       ? parent.children.filter(
-          (c): c is typeof pdf => c.type === "file" && c.mediaType === "video",
+          (c): c is typeof pdf =>
+            c.type === "file" && c.mediaType === pdf.mediaType,
         )
       : [pdf];
 
-    if (parent && videoSiblings.length > 1) {
+    if (parent && siblings.length > 1) {
       return (
         <VideoPlaylistPlayer
           current={pdf}
-          playlist={videoSiblings}
+          playlist={siblings}
           folderName={parent.name}
           folderPath={parent.path}
           breadcrumb={folderPath}
