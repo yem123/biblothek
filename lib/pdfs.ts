@@ -39,7 +39,7 @@ export async function getPdfTree(): Promise<PdfNode[]> {
     const response = await env.LIBRARY_API.fetch("https://internal/");
 
     if (!response.ok) {
-      throw new Error(`Failed to load PDF library: ${response.status}`);
+      throw new Error(`Failed to load Files: ${response.status}`);
     }
 
     return response.json();
@@ -50,7 +50,7 @@ export async function getPdfTree(): Promise<PdfNode[]> {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to load PDF library: ${response.status}`);
+      throw new Error(`Failed to load Files: ${response.status}`);
     }
 
     return response.json();

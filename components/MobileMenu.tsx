@@ -112,19 +112,10 @@ function TreeNode({
   const pathname = usePathname();
 
   const active = pathname === `/lesson/${node.id}`;
+  const isExternal = node.mediaType === "playlist";
 
-  return (
-    <Link
-      href={`/lesson/${node.id}`}
-      onClick={() => {
-        localStorage.setItem("last-pdf", node.id);
-        closeMenu();
-      }}
-      className="flex items-center py-3 truncate hover:bg-gray-100"
-      style={{
-        paddingLeft: depth * 18 + 16,
-      }}
-    >
+  const content = (
+    <>
       <Image
         src={ICONS[node.mediaType]}
         alt={node.mediaType}
@@ -133,10 +124,48 @@ function TreeNode({
         className="shrink-0"
       />
       <span
-        className={`ml-2 truncate ${active ? "underline text-cyan-700" : ""}`}
+        className={`ml-2 truncate ${
+          active ? "underline text-cyan-700" : ""
+        }`}
       >
         {node.name}
       </span>
+    </>
+  );
+
+  const commonClasses =
+    "flex items-center py-3 truncate hover:bg-gray-100";
+
+  const paddingStyle = {
+    paddingLeft: depth * 18 + 16,
+  };
+
+  if (isExternal) {
+    return (
+      <a
+        href={node.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={closeMenu}
+        className={commonClasses}
+        style={paddingStyle}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      href={`/lesson/${node.id}`}
+      onClick={() => {
+        localStorage.setItem("last-pdf", node.id);
+        closeMenu();
+      }}
+      className={commonClasses}
+      style={paddingStyle}
+    >
+      {content}
     </Link>
   );
 }
