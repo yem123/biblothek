@@ -21,7 +21,7 @@ const Document = dynamic(
   () => import("react-pdf").then((mod) => mod.Document),
   {
     ssr: false,
-    loading: () => <div className="p-10 text-center">Loading...</div>,
+    loading: () => <div className="p-10 text-center">Loading PDF...</div>,
   },
 );
 
@@ -116,7 +116,7 @@ export default function PdfViewer({ url, id, name, thumbnailUrl, breadcrumb }: P
         <Document
           file={fileToShow}
           onLoadSuccess={onLoadSuccess}
-          loading={<div className="p-10 text-center">Loading...</div>}
+          loading={<div className="p-10 text-center">Loading PDF...</div>}
         >
           {Array.from({ length: numPages }, (_, index) => (
             <Page

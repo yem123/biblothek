@@ -113,48 +113,6 @@ function TreeNode({
   const pathname = usePathname();
 
   const active = pathname === `/lesson/${node.id}`;
-  const isExternal = node.mediaType === "playlist";
-
-  const content = (
-    <>
-      <Image
-        src={ICONS[node.mediaType]}
-        alt={node.mediaType}
-        width={18}
-        height={18}
-        className="shrink-0"
-      />
-      <span
-        className={`ml-2 truncate ${
-          active ? "underline text-cyan-700" : ""
-        }`}
-      >
-        {node.name}
-      </span>
-    </>
-  );
-
-  const commonClasses =
-    "flex items-center py-3 truncate hover:bg-gray-100";
-
-  const paddingStyle = {
-    paddingLeft: depth * 18 + 16,
-  };
-
-  if (isExternal) {
-    return (
-      <a
-        href={node.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={closeMenu}
-        className={commonClasses}
-        style={paddingStyle}
-      >
-        {content}
-      </a>
-    );
-  }
 
   return (
     <Link
@@ -163,10 +121,23 @@ function TreeNode({
         localStorage.setItem("last-pdf", node.id);
         closeMenu();
       }}
-      className={commonClasses}
-      style={paddingStyle}
+      className="flex items-center py-3 truncate hover:bg-gray-100"
+      style={{
+        paddingLeft: depth * 18 + 16,
+      }}
     >
-      {content}
+      <Image
+        src={ICONS[node.mediaType]}
+        alt={node.mediaType}
+        width={18}
+        height={18}
+        className="shrink-0"
+      />
+      <span
+        className={`ml-2 truncate ${active ? "underline text-cyan-700" : ""}`}
+      >
+        {node.name}
+      </span>
     </Link>
   );
 }
