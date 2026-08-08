@@ -10,6 +10,7 @@ import {
   findParentFolder,
   findFolderPath,
 } from "@/lib/pdfs";
+import YouTubePlaylistEmbed from "@/components/YouTubePlaylistEmbed";
 
 export default async function LessonPage({
   params,
@@ -27,6 +28,10 @@ export default async function LessonPage({
   }
 
   const folderPath = findFolderPath(tree, id) ?? [];
+
+  if (pdf.mediaType === "youtube-playlist") {
+    return <YouTubePlaylistEmbed url={pdf.url} name={pdf.name} />;
+  }
 
   if (pdf.mediaType === "video" || pdf.mediaType === "youtube") {
     const parent = findParentFolder(tree, id);

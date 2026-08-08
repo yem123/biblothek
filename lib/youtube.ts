@@ -17,3 +17,12 @@ export function getYouTubeId(url: string): string | null {
     return null;
   }
 }
+
+export function getYouTubePlaylistId(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    return parsed.searchParams.get("list");
+  } catch {
+    return null;
+  }
+}

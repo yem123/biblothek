@@ -2,7 +2,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export type PdfFileNode = {
   type: "file";
-  mediaType: "pdf" | "video" | "playlist" | "youtube";
+  mediaType: "pdf" | "video" | "playlist" | "youtube" | "youtube-playlist";
   id: string;
   name: string;
   url: string;
@@ -22,7 +22,7 @@ export type PdfNode = PdfFolderNode | PdfFileNode;
 export function getThumbnail(node: PdfFileNode, pages?: number | null): string {
   if (node.thumbnailUrl) return node.thumbnailUrl;
 
-  if (node.mediaType === "video") {
+  if (node.mediaType === "video" || node.mediaType === "youtube-playlist") {
     return "/thumbnails/video-thumbnail.jpg";
   }
 
