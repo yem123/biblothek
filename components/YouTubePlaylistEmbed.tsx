@@ -18,15 +18,18 @@ export default function YouTubePlaylistEmbed({
   }
 
   return (
-    <div className="flex h-full flex-col p-4">
+    <div className="w-full overflow-hidden rounded-xl bg-black">
       <iframe
         src={`https://www.youtube.com/embed/videoseries?list=${playlistId}`}
         title={name}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        className="aspect-video w-full flex-1 rounded-xl"
+        className="w-full h-60 sm:h-90 lg:h-140"
       />
-      <h1 className="mt-3 text-lg font-semibold text-gray-900">{name}</h1>
+
+      <div className="p-3 text-sm sm:text-base font-medium text-white bg-neutral-900">
+        {name}
+      </div>
     </div>
   );
 }
