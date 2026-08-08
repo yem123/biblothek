@@ -15,7 +15,6 @@ const ICONS = {
   video: "/icons/video.svg",
   playlist: "/icons/video.svg",
   youtube: "/icons/video.svg",
-  "youtube-playlist": "/icons/video.svg",
 };
 
 export default function Sidebar({ pdfs }: Props) {
@@ -66,15 +65,10 @@ function TreeNode({
   const pathname = usePathname();
 
   const active = pathname === `/lesson/${node.id}`;
+  const isExternal = node.mediaType === "playlist";
 
-  return (
-    <Link
-      href={`/lesson/${node.id}`}
-      className="flex items-center py-3 truncate hover:bg-gray-100"
-      style={{
-        paddingLeft: depth * 18 + 16,
-      }}
-    >
+  const content = (
+    <>
       <Image
         src={ICONS[node.mediaType]}
         alt={node.mediaType}
@@ -87,6 +81,34 @@ function TreeNode({
       >
         {node.name}
       </span>
+    </>
+  );
+
+  const commonClasses = "flex items-center py-3 truncate hover:bg-gray-100";
+
+  const paddingStyle = { paddingLeft: depth * 18 + 16 };
+
+  if (isExternal) {
+    return (
+      <a
+        href={node.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={commonClasses}
+        style={paddingStyle}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link
+      href={`/lesson/${node.id}`}
+      className={commonClasses}
+      style={paddingStyle}
+    >
+      {content}
     </Link>
   );
 }
