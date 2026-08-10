@@ -22,19 +22,11 @@ export default function PlaylistVideoCard({ node }: { node: PdfFileNode }) {
           sizes="(max-width: 768px) 25vw, 140px"
         />
 
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
-          <div className="rounded-full bg-white/90 p-3 shadow-lg">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="text-black"
-            >
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-        </div>
+        {node.duration && (
+          <span className="absolute bottom-1.5 right-1.5 rounded bg-black/80 px-1.5 py-0.5 text-xs font-medium text-white">
+            {node.duration}
+          </span>
+        )}
       </div>
 
       <p className="line-clamp-2 text-xs font-medium text-gray-900">

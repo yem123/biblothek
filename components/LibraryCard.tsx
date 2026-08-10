@@ -45,6 +45,12 @@ export default function LibraryCard({
           </span>
         )}
 
+        {node.duration && (
+            <span className="absolute bottom-1.5 right-1.5 rounded bg-black/80 px-1.5 py-0.5 text-xs font-medium text-white">
+              {node.duration}
+            </span>
+          )}
+
         {node.mediaType === "pdf" && pages !== null && (
           <span className="absolute bottom-1.5 right-1.5 rounded bg-black/80 px-1.5 py-0.5 text-xs font-medium text-white">
             {`${pages} ${pages > 1 ? "pages" : "page"}`}

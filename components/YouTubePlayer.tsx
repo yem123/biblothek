@@ -38,7 +38,7 @@ export default function YouTubePlayer({
   url: string;
   onEnded: () => void;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<any>(null);
   const onEndedRef = useRef(onEnded);
 
@@ -76,17 +76,15 @@ export default function YouTubePlayer({
   }, [videoId]);
 
   if (!videoId) {
-    return (
-      <div className="flex aspect-video w-full items-center justify-center rounded-xl bg-black text-sm text-white">
-        Invalid YouTube link
-      </div>
-    );
+    return <div>Invalid YouTube link</div>;
   }
 
   return (
-    <div
-      ref={containerRef}
-      className="aspect-video w-full overflow-hidden rounded-xl"
-    />
+    <div className="space-y-2">
+      <div
+        ref={containerRef}
+        className="aspect-video w-full rounded-xl overflow-hidden"
+      />
+    </div>
   );
 }

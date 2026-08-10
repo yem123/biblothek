@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import type { PdfFileNode } from "@/lib/pdfs";
 import { getThumbnail } from "@/lib/pdfs";
-import { useVideoDuration, formatDuration } from "@/lib/useVideoDuration";
 import SubtitleToggle from "./SubtitleToggle";
 import { useSubtitleBlobUrl } from "@/lib/useSubtitleBlobUrl";
 import { useOfflineFile } from "@/lib/useOfflineFile";
@@ -209,9 +208,6 @@ function PlaylistItem({
   index: number;
   active: boolean;
 }) {
-  const duration = useVideoDuration(
-    video.mediaType === "video" ? video.url : "",
-  );
 
   return (
     <Link
@@ -228,11 +224,6 @@ function PlaylistItem({
           sizes="112px"
           className="object-cover"
         />
-        {duration !== null && (
-          <span className="absolute bottom-1 right-1 rounded bg-black/80 px-1 py-0.5 text-[10px] font-medium text-white">
-            {formatDuration(duration)}
-          </span>
-        )}
       </div>
 
       <div className="flex min-w-0 flex-col justify-center">
