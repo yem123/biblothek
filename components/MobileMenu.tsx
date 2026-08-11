@@ -182,34 +182,46 @@ function Folder({
   const pathname = usePathname();
 
   const activeFolder = pathname.startsWith(`/lesson/${node.path}`);
+  const isActive = pathname === `/folder/${node.path}`;
 
   const [open, setOpen] = useState(activeFolder);
 
   return (
     <>
-      <button
-        onClick={() => setOpen((prev) => !prev)}
-        className={`flex w-full items-center py-3 ${
-          activeFolder ? "bg-gray-100 text-cyan-900" : "hover:bg-gray-100"
+      <div
+        className={`flex w-full items-center ${
+          activeFolder || isActive
+            ? "bg-gray-100 text-cyan-900"
+            : "hover:bg-gray-100"
         }`}
-        style={{
-          paddingLeft: depth * 18 + 16,
-        }}
       >
-        <span className="mr-1 w-3.5 text-xs text-gray-500">
-          {open ? "▼" : "▶"}
-        </span>
+        <button
+          onClick={() => setOpen((prev) => !prev)}
+          className="flex items-center py-3 pr-1"
+          style={{ paddingLeft: depth * 18 + 16 }}
+          aria-label={open ? "Collapse folder" : "Expand folder"}
+        >
+          <span className="w-3.5 text-xs text-gray-500">
+            {open ? "▼" : "▶"}
+          </span>
+        </button>
 
-        <Image
-          src={open ? "/icons/folder-open.svg" : "/icons/folder.svg"}
-          alt=""
-          width={18}
-          height={18}
-          className="mr-2 shrink-0"
-        />
+        <Link
+          href={`/folder/${node.path}`}
+          onClick={closeMenu}
+          className="flex min-w-0 flex-1 items-center py-3"
+        >
+          <Image
+            src={open ? "/icons/folder-open.svg" : "/icons/folder.svg"}
+            alt=""
+            width={18}
+            height={18}
+            className="mr-2 shrink-0"
+          />
 
-        <span className="font-semibold truncate">{node.name}</span>
-      </button>
+          <span className="truncate font-semibold">{node.name}</span>
+        </Link>
+      </div>
 
       {open &&
         node.children.map((child) =>
