@@ -60,6 +60,7 @@ export default function SingleVideoPlayer({
             src={offlineUrl ?? video.url}
             controls
             autoPlay
+            playsInline
             className="w-full flex-1 rounded-xl bg-black"
           >
             {subtitleBlobUrl && (

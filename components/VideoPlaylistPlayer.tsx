@@ -92,31 +92,44 @@ export default function VideoPlaylistPlayer({
     }
   }
 
+  const enterPiP = async () => {
+    if (
+      document.pictureInPictureEnabled &&
+      videoRef.current &&
+      document.pictureInPictureElement !== videoRef.current
+    ) {
+      await videoRef.current.requestPictureInPicture();
+    }
+  };
+
   return (
     <div className="flex h-full flex-col lg:flex-row">
       <div className="flex shrink-0 flex-col p-4 lg:flex-1 lg:overflow-y-auto">
         {current.mediaType === "youtube" ? (
           <YouTubePlayer url={current.url} onEnded={handleEnded} />
         ) : (
-          <video
-            ref={videoRef}
-            key={current.id}
-            src={offlineUrl ?? current.url}
-            controls
-            autoPlay
-            onEnded={handleEnded}
-            className="w-full rounded-xl bg-black"
-          >
-            {subtitleBlobUrl && (
-              <track
-                kind="subtitles"
-                src={subtitleBlobUrl}
-                srcLang="de"
-                label="Deutsch"
-                default
-              />
-            )}
-          </video>
+          <div className="relative">
+            <video
+              ref={videoRef}
+              key={current.id}
+              src={offlineUrl ?? current.url}
+              controls
+              autoPlay
+              playsInline
+              onEnded={handleEnded}
+              className="w-full rounded-xl bg-black"
+            >
+              {subtitleBlobUrl && (
+                <track
+                  kind="subtitles"
+                  src={subtitleBlobUrl}
+                  srcLang="de"
+                  label="Deutsch"
+                  default
+                />
+              )}
+            </video>
+          </div>
         )}
 
         <div className="mt-2 flex items-start justify-between gap-3">
@@ -128,20 +141,30 @@ export default function VideoPlaylistPlayer({
               {folderName} · Video {currentIndex + 1} of {playlist.length}
             </p>
           </div>
+          <span className="flex">
+            <button
+              className="flex justify-center p-2 cursor-pointer"
+              onClick={enterPiP}
+            >
+              <p className="flex w-fit border-2 border-green-800 p-1 px-4 rounded text-xs bg-gray-300 text-black font-bold">
+                Open PiP
+              </p>
+            </button>
 
-          {current.mediaType !== "youtube" && (
-            <div className="flex items-center gap-2">
-              {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
-              <DownloadButton
-                id={current.id}
-                url={current.url}
-                name={current.name}
-                mediaType={downloadableMediaType}
-                thumbnailUrl={current.thumbnailUrl}
-                breadcrumb={breadcrumb}
-              />
-            </div>
-          )}
+            {current.mediaType !== "youtube" && (
+              <div className="flex items-center gap-2">
+                {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
+                <DownloadButton
+                  id={current.id}
+                  url={current.url}
+                  name={current.name}
+                  mediaType={downloadableMediaType}
+                  thumbnailUrl={current.thumbnailUrl}
+                  breadcrumb={breadcrumb}
+                />
+              </div>
+            )}
+          </span>
         </div>
       </div>
 
