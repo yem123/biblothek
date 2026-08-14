@@ -29,6 +29,16 @@ export default function SingleVideoPlayer({
     breadcrumb,
   );
 
+  const enterPiP = async () => {
+    if (
+      document.pictureInPictureEnabled &&
+      videoRef.current &&
+      document.pictureInPictureElement !== videoRef.current
+    ) {
+      await videoRef.current.requestPictureInPicture();
+    }
+  };
+
   return (
     <div className="flex h-full flex-col p-4">
       <video
@@ -80,17 +90,48 @@ export default function SingleVideoPlayer({
             <SubtitleToggle videoRef={videoRef} />
           )}
           {video.mediaType === "video" && (
-            <DownloadButton
-              id={video.id}
-              url={video.url}
-              name={video.name}
-              mediaType={downloadableMediaType}
-              thumbnailUrl={video.thumbnailUrl}
-              breadcrumb={breadcrumb}
-            />
+            <span className="flex">
+              <button
+                className="flex justify-center p-2 cursor-pointer"
+                onClick={enterPiP}
+              >
+                <p className="flex items-center gap-1.5 rounded-md bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-200">
+                  <PipIcon />
+
+                  <span className="lg:hidden">PiP</span>
+                  <span className="hidden lg:inline">Picture in Picture</span>
+                </p>
+              </button>
+              <DownloadButton
+                id={video.id}
+                url={video.url}
+                name={video.name}
+                mediaType={downloadableMediaType}
+                thumbnailUrl={video.thumbnailUrl}
+                breadcrumb={breadcrumb}
+              />
+            </span>
           )}
         </div>
       </div>
     </div>
+  );
+}
+
+function PipIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="3" width="20" height="18" rx="2" />
+      <path d="M13 13h6v5h-6z" />
+    </svg>
   );
 }

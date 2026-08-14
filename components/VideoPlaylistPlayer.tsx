@@ -108,7 +108,7 @@ export default function VideoPlaylistPlayer({
         {current.mediaType === "youtube" ? (
           <YouTubePlayer url={current.url} onEnded={handleEnded} />
         ) : (
-          <div className="relative">
+          <div>
             <video
               ref={videoRef}
               key={current.id}
@@ -141,17 +141,20 @@ export default function VideoPlaylistPlayer({
               {folderName} · Video {currentIndex + 1} of {playlist.length}
             </p>
           </div>
-          <span className="flex">
-            <button
-              className="flex justify-center p-2 cursor-pointer"
-              onClick={enterPiP}
-            >
-              <p className="flex w-fit border-2 border-green-800 p-1 px-4 rounded text-xs bg-gray-300 text-black font-bold">
-                Open PiP
-              </p>
-            </button>
 
-            {current.mediaType !== "youtube" && (
+          {current.mediaType !== "youtube" && (
+            <span className="flex">
+              <button
+                className="flex justify-center p-2 cursor-pointer"
+                onClick={enterPiP}
+              >
+                <p className="flex items-center gap-1.5 rounded-md bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-gray-200">
+                  <PipIcon />
+
+                  <span className="lg:hidden">PiP</span>
+                  <span className="hidden lg:inline">Picture in Picture</span>
+                </p>
+              </button>
               <div className="flex items-center gap-2">
                 {subtitleBlobUrl && <SubtitleToggle videoRef={videoRef} />}
                 <DownloadButton
@@ -163,8 +166,8 @@ export default function VideoPlaylistPlayer({
                   breadcrumb={breadcrumb}
                 />
               </div>
-            )}
-          </span>
+            </span>
+          )}
         </div>
       </div>
 
@@ -295,6 +298,24 @@ function LoopIcon() {
       <path d="M3 11V9a4 4 0 0 1 4-4h14" />
       <path d="M7 22l-4-4 4-4" />
       <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+    </svg>
+  );
+}
+
+function PipIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="3" width="20" height="18" rx="2" />
+      <path d="M13 13h6v5h-6z" />
     </svg>
   );
 }
